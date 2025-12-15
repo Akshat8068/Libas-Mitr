@@ -10,6 +10,7 @@ import adminRoutes from "./routes/adminRoutes.js"
 import productRoutes from "./routes/productRoutes.js"
 import cartRoutes from "./routes/cartRoutes.js"
 import couponRoutes from "./routes/couponRoutes.js"
+import virtualTryOnRoutes from "./routes/virtualTryOnRoutes.js"
 import errorHandler from "./middleware/errorHandler.js"
 
 const app = express()
@@ -43,6 +44,10 @@ app.use("/api/cart", cartRoutes)
 
 // coupon routes
 app.use("/api/coupon", couponRoutes)
+
+// virtual Try On Routes
+
+app.use("/api/virtual_tryon",virtualTryOnRoutes)
 
 // Error Handler
 app.use(errorHandler)

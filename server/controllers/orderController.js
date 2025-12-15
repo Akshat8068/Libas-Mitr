@@ -5,13 +5,19 @@ import Product from "../models/productModel.js"
 const placeOrder = async (req, res) => {
     const userId = req.user._id
 
-    const { coupon } = req.body
-    let couponCode = await Coupan.findOne({ couponCode: coupon })
-
-    if (!couponCode) {
-        res.status(404)
-        throw new Error("Inavalid Coupon");
+    const { shippingAddress } = req.body
+    
+    if (!shippingAddress) {
+        res.status(409)
+        throw new Error("Please Enter Shipping Address");
+        
     }
+    let couponCode = await Coupan.findOne({ couponCode: req.body?.coupon })
+
+    // if (!couponCode) {
+    //     res.status(404)
+    //     throw new Error("Inavalid Coupon");
+    // }
 
 
     const cart = await Cart.findOne({ user: userId })
@@ -26,18 +32,22 @@ const placeOrder = async (req, res) => {
         return acc + product.product.salePrice * product.qty
     }, 0)
 
-    totalBill = totalBill - totalBill * couponCode.couponDiscount / 100
+    totalBill = couponCode ? totalBill - totalBill * couponCode.couponDiscount / 100 : totalBill
 
 
-    const order = {
-        user: userId,
-        cart: cart,
-        TotalBillAmount: totalBill,
-        isDiscounted: couponCode ? true : false,
-        coupon: couponCode._id
+    const order = new Order(
+        {
+            user: userId,
+            products: cart.products,
+            TotalBillAmount: totalBill,
+            isDiscounted: couponCode ? true : false,
+            coupon: couponCode ? couponCode._id : null,
+            shippingAddress:shippingAddress
 
-    }
-    let newOrder = await Order.create(order)
+        }
+    )
+    await order.save()
+
     
     if (!order) {
         res.status(409)
@@ -45,7 +55,7 @@ const placeOrder = async (req, res) => {
         
     }
     res.status(201)
-    res.json(newOrder)
+    res.json(order)
 }
 const cancelOrder = async (req, res) => {
     const orderId = req.params.oid
@@ -78,7 +88,7 @@ const getOrders = async (req, res) => {
 
     const userId = req.user._id
     
-    const myOrders = await Order.find({ user: userId }).populate('cart').populate('user')
+    const myOrders = await Order.find({ user: userId }).populate('products.product').populate('user')
     
     if (!myOrders) {
         res.status(404)
@@ -92,7 +102,7 @@ const getOrders = async (req, res) => {
 const getOrder = async (req, res) => {
     const orderId = req.params.oid
 
-    const myOrder = await Order.findById(orderId).populate('cart').populate('user')
+    const myOrder = await Order.findById(orderId).populate('products.product').populate('user')
 
     if (!myOrder) {
         res.status(404)
@@ -100,14 +110,10 @@ const getOrder = async (req, res) => {
 
     }
 
-    const cart = await Cart.findById(myOrder.cart._id)
-
-    await cart.populate("products.product")
     
-    console.log(cart)
 
     res.status(200).json({
-        myOrder,cart
+        myOrder
     })
 }
 

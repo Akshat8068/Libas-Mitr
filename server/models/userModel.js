@@ -32,6 +32,11 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: true
+    },
+    credits: {
+        type: Number,
+        required: true,
+        default:5
     }
     
 }, {

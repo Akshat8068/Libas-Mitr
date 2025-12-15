@@ -12,11 +12,13 @@
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.8.0",
     "colors": "^1.4.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^7.0.0",
     "mongoose": "^9.0.0",
-    "multer": "^2.0.2"
+    "multer": "^2.0.2",
+    "replicate": "^1.4.0"
   }
 }

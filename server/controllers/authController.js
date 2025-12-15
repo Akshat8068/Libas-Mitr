@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken"
 
 
 import User from "../models/userModel.js"
-
 const registerUser = async (req, res) => {
     // check all filed are filled
     const { name, email, password, phone, address } = req.body
@@ -19,13 +18,13 @@ const registerUser = async (req, res) => {
     if (emailexist || phoneexist) {
         res.status(409)
         throw new Error("User Already Exist");
-        
+
     }
     // check phone number
     if (phone.length !== 10) {
         res.status(409)
         throw new Error("Please Enter valid phone number");
-        
+
     }
 
     // hash password
@@ -38,7 +37,7 @@ const registerUser = async (req, res) => {
         phone: phone,
         email: email,
         password: hashpassword,
-        address:address
+        address: address
     })
     if (!user) {
         res.status(400)
@@ -52,7 +51,8 @@ const registerUser = async (req, res) => {
             email: user.email,
             phone: user.phone,
             address: user.address,
-            isAdmin:user.isAdmin,
+            isAdmin: user.isAdmin,
+            credits: user.credits,
             token: genrateToken(user._id)
 
         })
@@ -66,7 +66,7 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     const { email, password } = req.body
 
-    if (!email || !password ) {
+    if (!email || !password) {
         res.status(409)
         throw new Error("Please Fill all deatils")
 
@@ -82,13 +82,14 @@ const loginUser = async (req, res) => {
             phone: user.phone,
             address: user.address,
             isAdmin: user.isAdmin,
-            token:genrateToken(user._id)
+            credits: user.credits,
+            token: genrateToken(user._id)
         })
     }
     else {
         res.status(401)
         throw new Error("Inavlid Credentials");
-        
+
     }
 }
 
@@ -96,7 +97,7 @@ const loginUser = async (req, res) => {
 const genrateToken = (id) => {
     let token = jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' })
     return token
-    
+
 }
 
 const authController = {
