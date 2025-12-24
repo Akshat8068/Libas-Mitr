@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>LibasMitr - Premium Fashion</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0aaeae",
+                        "background-light": "#f8f8f8",
+                        "background-dark": "#102222",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "serif": ["Cormorant Garamond", "serif"],
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .font-serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-[#111818] dark:text-white font-display">
+    <!-- Sticky Header -->
+    <header
+        class="sticky top-0 z-50 w-full bg-white/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-[#e5e7eb] dark:border-[#2a3838]">
+        <div class="px-6 lg:px-12 flex h-20 items-center justify-between max-w-[1440px] mx-auto">
+            <!-- Logo -->
+            <div class="flex items-center gap-2">
+                <a class="flex items-center gap-2" href="#">
+                    <div class="size-8 text-primary">
+                        <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M24 4L6 14V34L24 44L42 34V14L24 4Z" fill="currentColor" fill-opacity="0.2"
+                                stroke="currentColor" stroke-linejoin="round" stroke-width="4"></path>
+                            <path d="M24 14V34" stroke="currentColor" stroke-linecap="round" stroke-width="4"></path>
+                            <path d="M15 19L24 24L33 19" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="4"></path>
+                        </svg>
+                    </div>
+                    <span
+                        class="text-2xl font-bold tracking-tight font-serif text-gray-900 dark:text-white">LibasMitr</span>
+                </a>
+            </div>
+            <!-- Navigation (Hidden on mobile for cleaner demo, visible on desktop) -->
+            <nav class="hidden md:flex items-center gap-8">
+                <a class="text-sm font-medium text-gray-700 hover:text-primary dark:text-gray-300 dark:hover:text-primary transition-colors"
+                    href="#">Women</a>
+                <a class="text-sm font-medium text-gray-700 hover:text-primary dark:text-gray-300 dark:hover:text-primary transition-colors"
+                    href="#">Men</a>
+                <a class="text-sm font-medium text-gray-700 hover:text-primary dark:text-gray-300 dark:hover:text-primary transition-colors"
+                    href="#">Brands</a>
+                <a class="text-sm font-medium text-gray-700 hover:text-primary dark:text-gray-300 dark:hover:text-primary transition-colors"
+                    href="#">New Arrivals</a>
+                <a class="text-sm font-medium text-red-600 hover:text-red-700 transition-colors" href="#">Sale</a>
+            </nav>
+            <!-- Utilities -->
+            <div class="flex items-center gap-4">
+                <!-- Search -->
+                <div
+                    class="hidden lg:flex items-center bg-background-light dark:bg-[#1a2c2c] rounded-full px-4 py-2 w-64 border border-transparent focus-within:border-primary/50 transition-all">
+                    <span class="material-symbols-outlined text-gray-400 text-[20px]">search</span>
+                    <input
+                        class="bg-transparent border-none focus:ring-0 text-sm w-full text-gray-900 dark:text-white placeholder-gray-400"
+                        placeholder="Search for products..." type="text" />
+                </div>
+                <!-- Icons -->
+                <button class="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-colors">
+                    <span class="material-symbols-outlined text-gray-700 dark:text-gray-300">person</span>
+                </button>
+                <button class="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-colors relative">
+                    <span class="material-symbols-outlined text-gray-700 dark:text-gray-300">favorite</span>
+                </button>
+                <button class="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-colors relative">
+                    <span class="material-symbols-outlined text-gray-700 dark:text-gray-300">shopping_bag</span>
+                    <span class="absolute top-1 right-1 size-2 bg-primary rounded-full"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="w-full">
+        <!-- Hero Section -->
+        <section class="relative w-full h-[600px] bg-gray-100 overflow-hidden group">
+            <div class="absolute inset-0 w-full h-full bg-cover bg-center"
+                data-alt="Elegant woman wearing high fashion summer clothing walking in a bright sunlit street"
+                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD52Mc4-G1iGxxlCLnfjnDsDlPWWAEoTCUyKSAi3bvqb9ZIppsRizDy2OsL-jxt-ZFM3pZ13tZLqrIKlGh_sDqflWRs6sPvYSfCS2TLhkPc5TLiyqR30uZbwZDb9Vxl2XIngiLFAYnWWNeRPPSOokVHItHxh_fkzMAQlhYGOHLsFYpVwYglwtuzySrdvQT5DfqJg6C5ICLFDB6yUuNIQJnkbV9zm2xJiniTwzVYC-61eVj3J8pBy8ClsROf8ullkNwRQnSgEhqQM01S');">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent"></div>
+            <div
+                class="relative z-10 h-full max-w-[1440px] mx-auto px-6 lg:px-12 flex flex-col justify-center text-white">
+                <span class="text-primary font-bold tracking-widest uppercase text-sm mb-4">New Collection 2024</span>
+                <h1 class="text-5xl md:text-7xl font-bold font-serif leading-tight mb-6 max-w-2xl">
+                    Elegance is an <br />Attitude.
+                </h1>
+                <p class="text-lg md:text-xl opacity-90 mb-10 max-w-lg font-light">
+                    Discover the latest trends in premium fashion. Curated styles for the modern individual.
+                </p>
+                <div class="flex gap-4">
+                    <button
+                        class="bg-primary hover:bg-primary/90 text-white px-8 py-3.5 rounded-lg font-medium transition-all shadow-lg shadow-primary/30">
+                        Shop Women
+                    </button>
+                    <button
+                        class="bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 text-white px-8 py-3.5 rounded-lg font-medium transition-all">
+                        Shop Men
+                    </button>
+                </div>
+            </div>
+        </section>
+        <!-- Brand Slider (Marquee style simulation) -->
+        <section class="py-10 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-background-dark">
+            <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+                <p class="text-center text-sm text-gray-400 font-medium mb-8 uppercase tracking-widest">Trusted by
+                    Premium Brands</p>
+                <div
+                    class="flex flex-wrap justify-center lg:justify-between items-center gap-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                    <span class="text-2xl font-serif font-bold">VOGUE</span>
+                    <span class="text-2xl font-serif font-bold">HARPER</span>
+                    <span class="text-2xl font-serif font-bold">ELLE</span>
+                    <span class="text-2xl font-serif font-bold">GRAZIA</span>
+                    <span class="text-2xl font-serif font-bold">VANITY FAIR</span>
+                    <span class="text-2xl font-serif font-bold">GQ</span>
+                </div>
+            </div>
+        </section>
+        <!-- Shop by Category -->
+        <section class="py-16 bg-background-light dark:bg-background-dark">
+            <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+                <div class="flex justify-between items-end mb-10">
+                    <div>
+                        <h2 class="text-3xl font-serif font-bold text-[#111818] dark:text-white mb-2">Shop by Category
+                        </h2>
+                        <p class="text-gray-500 dark:text-gray-400">Essentials for every occasion</p>
+                    </div>
+                    <a class="text-primary font-medium hover:underline flex items-center gap-1" href="#">
+                        View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </a>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Card 1 -->
+                    <div class="group cursor-pointer">
+                        <div class="overflow-hidden rounded-xl bg-gray-200 aspect-[3/4] relative mb-4">
+                            <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
+                                data-alt="Woman wearing traditional ethnic wear red saree"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAzbibemp6T5UXHBplmrdFkYIusoKHEa-_jj7QzncMYDjj2WzWKDOeqIYpnw06nKwrfSVJ7ksm7Ng8yF3cMePJUaPsA4HI8jZj2I2r0uOD_RyR1Lpd_S8yw68Vzk3lxpFvrYLc4q36Zc0FaW9XBlpab7YUmBgvNCMXvF3eNnAx4g2bCrViqd7sLiHzXFgO9dBd-FdFaGFjdyeTduL9qeHo_Ct-WynehgoPobBD-UcCYCNnH9LHmgUPthWE5hVXEIf9cP7PwEsUjqH8S');">
+                            </div>
+                            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+                        </div>
+                        <h3 class="text-lg font-medium text-[#111818] dark:text-white">Women's Ethnic</h3>
+                        <p class="text-sm text-gray-500">Sarees, Kurtas &amp; Lehengas</p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="group cursor-pointer">
+                        <div class="overflow-hidden rounded-xl bg-gray-200 aspect-[3/4] relative mb-4">
+                            <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
+                                data-alt="Man wearing formal grey suit standing confident"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCS4wJ2TO6SaFqcu52a9bjvWRbBh_RpWLtvow2Bod-SsEPU7CstkJtkCxmY_QNTpUVE2TnkjfWFIdKNsav1rR21lCrFByq_J6PzYdjAgUG0sWBa8ZBOIa1UR4xwa3E3C_zcevx9ujIlBRb8757XRHy9nB0ntS4srn0N8PGmCp7eQ_4_nzwO386i2NNC1-CHeIcmfwHB3ziblsgQ5OLIMujiyKMvBSZtSJzzHA2YTPRHsN526rrzoJx52IL-4RqSjWheJ5DTVjSWiQfV');">
+                            </div>
+                            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+                        </div>
+                        <h3 class="text-lg font-medium text-[#111818] dark:text-white">Men's Formal</h3>
+                        <p class="text-sm text-gray-500">Suits, Shirts &amp; Trousers</p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="group cursor-pointer">
+                        <div class="overflow-hidden rounded-xl bg-gray-200 aspect-[3/4] relative mb-4">
+                            <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
+                                data-alt="Collection of premium leather shoes and boots"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBak5xVcQFCkLmkWnr0P9EcOC0NyD6ShR8_oqi06anDo6P817vIh-V7c6LRba3aXXVXgIDV_STr6ES-03wA4WDbGfIwwZ9lOXpS2jt90TVxrz0N1JZpuu77ZSnOPomxIu8uzXVxB1Hn2zRMVaQZFTGMfJOXh9G0uWKe1S59qEi9N9iEDcR1iFFb-Se7zd3u1UyyxPdP6iKwEyGRcVwN7nRuhezareX21qAOHaZbNXMhdjHnBDIwqpNcFnuiRTqSt3jmovt6C7mk5JNl');">
+                            </div>
+                            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+                        </div>
+                        <h3 class="text-lg font-medium text-[#111818] dark:text-white">Footwear</h3>
+                        <p class="text-sm text-gray-500">Heels, Sneakers &amp; Loafers</p>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="group cursor-pointer">
+                        <div class="overflow-hidden rounded-xl bg-gray-200 aspect-[3/4] relative mb-4">
+                            <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
+                                data-alt="Various fashion accessories including handbags and sunglasses"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBY0ocNrKdi5zTT3d0dE75ZgpLds_oNDKF2JCH9vvKU3F6Dk-RIiPNBSOW5DZS0bUoEBm3Bt_76XtBSTExU-8IQHwx4uJM4SYkoxyJbWfR5IWV1iaQX3LWPjaV3CbMAkniPs9umDN0wTCURdVzODEvlgrCU7ZG-Gq2eXjQD-ru2EIb8qArE00kO21GS8ZwNUR9VuteW5jKiF2LSm65RrMHgCKToe6q74zOP1mrq9fKoRRXGSd5PAMwxX37pianbADMXfrGr08Deb9VA');">
+                            </div>
+                            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+                        </div>
+                        <h3 class="text-lg font-medium text-[#111818] dark:text-white">Accessories</h3>
+                        <p class="text-sm text-gray-500">Bags, Jewelry &amp; Watches</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Virtual Try-On Section -->
+        <section class="py-20 bg-primary/5 dark:bg-[#152828] relative overflow-hidden">
+            <div class="max-w-[1440px] mx-auto px-6 lg:px-12 relative z-10">
+                <div class="flex flex-col lg:flex-row items-center gap-16">
+                    <!-- Text Content -->
+                    <div class="flex-1 space-y-8">
+                        <div>
+                            <span
+                                class="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold tracking-wider uppercase mb-4">Beta
+                                Feature</span>
+                            <h2 class="text-4xl lg:text-5xl font-serif font-bold text-[#111818] dark:text-white mb-6">
+                                Experience Fashion <br /> Before You Buy
+                            </h2>
+                            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-lg leading-relaxed">
+                                Not sure about the fit? Use our AI-powered Virtual Try-On feature to see exactly how our
+                                collection looks on you.
+                            </p>
+                        </div>
+                        <!-- Steps -->
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="size-12 rounded-full bg-white dark:bg-white/10 flex items-center justify-center shadow-sm shrink-0">
+                                    <span class="material-symbols-outlined text-primary">add_a_photo</span>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold text-[#111818] dark:text-white">1. Upload Your Photo
+                                    </h4>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Take a quick selfie or upload a
+                                        full-body photo.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="size-12 rounded-full bg-white dark:bg-white/10 flex items-center justify-center shadow-sm shrink-0">
+                                    <span class="material-symbols-outlined text-primary">checkroom</span>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold text-[#111818] dark:text-white">2. Select a Style</h4>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Choose any outfit from our
+                                        supported collection.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="size-12 rounded-full bg-white dark:bg-white/10 flex items-center justify-center shadow-sm shrink-0">
+                                    <span class="material-symbols-outlined text-primary">auto_awesome</span>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-bold text-[#111818] dark:text-white">3. See the Magic</h4>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Instantly see yourself wearing
+                                        the new look.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            class="bg-[#111818] dark:bg-white text-white dark:text-[#111818] px-8 py-4 rounded-lg font-medium flex items-center gap-2 hover:opacity-90 transition-opacity mt-4">
+                            <span class="material-symbols-outlined">cameraswitch</span>
+                            Try Virtual Room
+                        </button>
+                    </div>
+                    <!-- Visual -->
+                    <div class="flex-1 w-full max-w-lg lg:max-w-xl">
+                        <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-white aspect-[4/5] group">
+                            <!-- Before/After Split Effect Simulation -->
+                            <div class="absolute inset-0 bg-cover bg-center"
+                                data-alt="Model wearing a yellow dress in a virtual try on interface"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDEGl9Y135J8cfMQoEiyvPULjrKg5h2BCp4yK4ON6Iyct9smWGkduohGI-I1-JDSirO1M2kR3qdP7FerxCLsz9WVpoBq2sK5Dbwt_bxcHxMR2SC5AKGURGLo2UTdcWxAlCWynmZrJgP41EQ8xWnWruou1XYV9CB7bODZQEhi_eDGbAie1-C0HsA79kTg389M7VhTV4k-S2s2-9jEZO5jtIiBfxt-GBvHQDFLdMpUhOKv6Mbq5SBg5vM-URdoCPWxPt8TNA13IIYHTMi');">
+                            </div>
+                            <!-- UI Overlay for "App" feel -->
+                            <div
+                                class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-lg border border-white/50">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="size-10 rounded-full bg-gray-200 bg-cover bg-center"
+                                            data-alt="Thumbnail of the dress"
+                                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB42ZUpkVen7Opy0E0AWwqAVl-3BKW9vtKiPZE15EF1mCNjmcakO6PdW581SswpWmOPdKV7k32t1wx_d8n1IEIv21g6LWMyK6Qrqj-8s60iobgFcNQ1gQQ8ySKVawh2WVykDV9s4mk8qWkXn1F_Ys-KJV7_FaZuv2muDdJddrRgQvfKW81dOWp89PwCVrHLhlLk_SW3GG7M5wGisWh35QHE1EVAvt8J0XE_SChJw5mOFN_1OR4o9teoRAoGDYx-OKyVtzqg9aCNLWU3');">
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-bold text-gray-900">Summer Yellow Maxi</p>
+                                            <p class="text-xs text-green-600 font-medium">98% Match</p>
+                                        </div>
+                                    </div>
+                                    <button class="text-primary hover:bg-primary/10 p-2 rounded-full transition-colors">
+                                        <span class="material-symbols-outlined">favorite</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- New Arrivals Carousel -->
+        <section class="py-16 bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800">
+            <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+                <div class="flex justify-between items-end mb-10">
+                    <h2 class="text-3xl font-serif font-bold text-[#111818] dark:text-white">New Arrivals</h2>
+                    <div class="flex gap-2">
+                        <button
+                            class="size-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-white/5 transition-colors">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <button
+                            class="size-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-white/5 transition-colors">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex overflow-x-auto hide-scrollbar gap-6 pb-4">
+                    <!-- Product 1 -->
+                    <div class="min-w-[280px] group">
+                        <div class="relative aspect-[3/4] bg-gray-100 rounded-lg overflow-hidden mb-4">
+                            <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                                data-alt="Elegant blue silk dress"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB6MGT3GQ41JBYhzNM_TWVOXc5KwCTK1xdbXQlbCDpNlO36hNcZbzf5aiq0efsfY9CLkn8upXRrsEAtzHbFD2BsXmD5qAxqxPXxDD5Ahcycm8iGnxewnQIWYkf0aDThLRRz8aL11XQpvx1NEDWEZoMR5qVa4nMFUFTE3WWtA5x3JzZsiJOcCs2vrRUxOeZmXAmNpNVei5dA4z2iuKCEfIs0H3-UDanJkcRVW-xKdcGv8Kh2Qk6AoEPrLMe33du-zRZgX82waYRWYQpJ');">
+                            </div>
+                            <button
+                                class="absolute bottom-4 right-4 bg-white text-[#111818] size-10 rounded-full flex items-center justify-center shadow-md translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-primary hover:text-white">
+                                <span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+                            </button>
+                            <span
+                                class="absolute top-3 left-3 bg-white/90 backdrop-blur px-2 py-1 text-xs font-bold uppercase tracking-wider rounded">New</span>
+                        </div>
+                        <p class="text-xs text-gray-500 font-medium mb-1">LIBAS LUXE</p>
+                        <h3 class="text-base font-medium text-[#111818] dark:text-white truncate">Royal Blue Silk Dress
+                        </h3>
+                        <p class="text-primary font-bold mt-1">₹ 4,999</p>
+                    </div>
+                    <!-- Product 2 -->
+                    <div class="min-w-[280px] group">
+                        <div class="relative aspect-[3/4] bg-gray-100 rounded-lg overflow-hidden mb-4">
+                            <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                                data-alt="Men's beige linen blazer"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDlPkrkYmWLpKQhUlhWeQCEvGN_UI2gRwEJ4IRgBYk1-Udl6iIq5K8jJtpREblelGPXbcTbAbxLKIodGI4FmrsO7xTZz2xKDNJxxriQUfmuKcGlhInIZow9FoWSnMzKtrI7WEakMlcvj9kUwnnt-bYMnf0CAo6t34UhZE2Tl7_9_GNPxbySTTKW1nCUgsWXXqTiZXz9ma2gv4rLClrQx4mHwEP2cWeNfvBTR2_gUxrMk4Bf411qk2jmqjarmMfkevsvXES9_V7Ct710');">
+                            </div>
+                            <button
+                                class="absolute bottom-4 right-4 bg-white text-[#111818] size-10 rounded-full flex items-center justify-center shadow-md translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-primary hover:text-white">
+                                <span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 font-medium mb-1">MAN KIND</p>
+                        <h3 class="text-base font-medium text-[#111818] dark:text-white truncate">Linen Summer Blazer
+                        </h3>
+                        <p class="text-primary font-bold mt-1">₹ 8,450</p>
+                    </div>
+                    <!-- Product 3 -->
+                    <div class="min-w-[280px] group">
+                        <div class="relative aspect-[3/4] bg-gray-100 rounded-lg overflow-hidden mb-4">
+                            <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                                data-alt="Designer red gown"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDgl_-S6c0KTuhsqAvjzf-pXdk2x3xMoxCOGG8__Et2AkCiPP03Ez_gX7r6uW83d5B_SVWWjoAxkXiMF3YyhdRoym4aLaquGt5sRAxjZX-B4_4Jk_zI8tgXbMeg4YE65ysEpQigWoY6cS-LgbQAo_-b2D4Q-DAZ1X0b2DL6N_9pNh9OJYNmqBKEuxpSG95U8JuktPXyvON4Q9Hu6A4vjZuDq1WOOuqcmau4d6Dxq2Kq_humHiMXOUtMizO_9zg-O4v7CPL2SIxS_9QC');">
+                            </div>
+                            <button
+                                class="absolute bottom-4 right-4 bg-white text-[#111818] size-10 rounded-full flex items-center justify-center shadow-md translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-primary hover:text-white">
+                                <span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 font-medium mb-1">VOGUE VISTA</p>
+                        <h3 class="text-base font-medium text-[#111818] dark:text-white truncate">Crimson Evening Gown
+                        </h3>
+                        <p class="text-primary font-bold mt-1">₹ 12,999</p>
+                    </div>
+                    <!-- Product 4 -->
+                    <div class="min-w-[280px] group">
+                        <div class="relative aspect-[3/4] bg-gray-100 rounded-lg overflow-hidden mb-4">
+                            <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                                data-alt="Traditional patterned jacket"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuADYjq3NwDmjYEWZsFo1B_GNQcjFXjsdtf-FG5QrCVRqhKm8DQWU9Z8C_yEG99X-JGi5MPIfnqDu2yWTgXxKJH4MKixVR4Pil4BwmAAPHiMnc65cspZNEkieGJUe_ygK6p8IpFwEKs3DGNBPcXT4BLbedv3mPLvEzebnXpKe0cZALsWISB-giu1AjiBWlottpul3KXW4Ff6lNqDxquf7Q5X0Qc3G1jCYOJ4JT7gCb6SNqOwUOZT8hgdoSHMr7ChoQhbed6hoCqUrDts');">
+                            </div>
+                            <button
+                                class="absolute bottom-4 right-4 bg-white text-[#111818] size-10 rounded-full flex items-center justify-center shadow-md translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-primary hover:text-white">
+                                <span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 font-medium mb-1">ETHNIC ROOTS</p>
+                        <h3 class="text-base font-medium text-[#111818] dark:text-white truncate">Embroidered Nehru
+                            Jacket</h3>
+                        <p class="text-primary font-bold mt-1">₹ 3,250</p>
+                    </div>
+                    <!-- Product 5 -->
+                    <div class="min-w-[280px] group">
+                        <div class="relative aspect-[3/4] bg-gray-100 rounded-lg overflow-hidden mb-4">
+                            <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                                data-alt="Minimalist beige handbag"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuASFsM9a-TWzifWZP23Tvz8H9h7yVwrsl4twBtmiQkPsLT_jPYSL-cZjdJw4piMPzZfnQYv4i9u1yiCr3LuKBhJmIXXBplRJyXB0JtOltXgdTYsnSfL5TcZqjkUuPEijmIxowaU-lsX9HyavRfVPN8BTfWB3JmwFd4ttdFLcxQjmlOI2WHJC3XT6n_nJGFiplB1zGmi9-_fV0nuhgau6cf0lKcGGVSHsly0936-ShtEDrT0Nn3Du3B1PQlmuTw6O1YQtS00Y2xRQ93j');">
+                            </div>
+                            <button
+                                class="absolute bottom-4 right-4 bg-white text-[#111818] size-10 rounded-full flex items-center justify-center shadow-md translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-primary hover:text-white">
+                                <span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 font-medium mb-1">ACCESSORIZE</p>
+                        <h3 class="text-base font-medium text-[#111818] dark:text-white truncate">Canvas Tote Bag</h3>
+                        <p class="text-primary font-bold mt-1">₹ 1,999</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+</body>
+
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>LibasMitr - A Premium Multi-Brand Fashion E-commerce Website</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&amp;family=Inter:wght@400;500;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,0"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#044343",
+                        "background-light": "#F8F8F8",
+                        "background-dark": "#102222",
+                        "charcoal": "#212121",
+                        "white-soft": "#F8F8F8",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "heading": ["Cormorant Garamond", "serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "8px",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="font-display bg-background-light dark:bg-background-dark text-charcoal dark:text-white-soft">
+    <div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <header
+                class="sticky top-0 z-50 flex w-full items-center justify-center border-b border-solid border-primary/20 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm px-4 md:px-10 lg:px-20">
+                <div class="flex w-full max-w-7xl items-center justify-between whitespace-nowrap py-3">
+                    <div class="flex items-center gap-8">
+                        <div class="flex items-center gap-3 text-charcoal dark:text-white-soft">
+                            <div class="size-6 text-primary">
+                                <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h2 class="font-heading text-2xl font-bold leading-tight">LibasMitr</h2>
+                        </div>
+                        <nav class="hidden md:flex items-center gap-9">
+                            <a class="text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary"
+                                href="#">Men</a>
+                            <a class="text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary"
+                                href="#">Women</a>
+                            <a class="text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary"
+                                href="#">Brands</a>
+                            <a class="text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary"
+                                href="#">Sale</a>
+                            <a class="text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary"
+                                href="#">About Us</a>
+                        </nav>
+                    </div>
+                    <div class="flex flex-1 items-center justify-end gap-4 md:gap-6">
+                        <label class="hidden sm:flex flex-col min-w-40 !h-10 max-w-64">
+                            <div
+                                class="flex w-full flex-1 items-stretch rounded-lg h-full bg-primary/10 dark:bg-white/10">
+                                <div class="text-primary dark:text-white-soft/70 flex items-center justify-center pl-4">
+                                    <span class="material-symbols-outlined text-xl">search</span>
+                                </div>
+                                <input
+                                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-charcoal dark:text-white-soft focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-charcoal/50 dark:placeholder:text-white-soft/50 pl-2 text-base font-normal leading-normal"
+                                    placeholder="Search" value="" />
+                            </div>
+                        </label>
+                        <div class="flex gap-2">
+                            <button
+                                class="flex cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 w-10 bg-primary/10 dark:bg-white/10 text-charcoal dark:text-white-soft hover:bg-primary/20 dark:hover:bg-white/20 transition-colors">
+                                <span class="material-symbols-outlined">person</span>
+                            </button>
+                            <button
+                                class="flex cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 w-10 bg-primary/10 dark:bg-white/10 text-charcoal dark:text-white-soft hover:bg-primary/20 dark:hover:bg-white/20 transition-colors">
+                                <span class="material-symbols-outlined">favorite</span>
+                            </button>
+                            <button
+                                class="flex cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 w-10 bg-primary/10 dark:bg-white/10 text-charcoal dark:text-white-soft hover:bg-primary/20 dark:hover:bg-white/20 transition-colors">
+                                <span class="material-symbols-outlined">shopping_bag</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <main class="flex flex-col items-center">
+                <div class="w-full">
+                    <div class="flex min-h-[calc(100vh-65px)] max-h-[800px] flex-col items-center justify-center bg-cover bg-center bg-no-repeat p-4"
+                        data-alt="A stylish model wearing a vibrant outfit against a minimalist background."
+                        style='background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDAoRp0HKsbqVCotfEKi4t6IhPn2WnVu5_D5HX-pJaAQhtgv9H4-PSizCr0svQ2oisDZjIvqp6uPX46MwKcmJXiDIOGPhXH4w5ITDfmeFf-_40enTo2JnAlQVTAXic0zLgk2KDsLAdeWEs7wHr9STm023-rYiI3p8byb7Hu7ZreMdeHH70TGmGW06Y_YBfDljusag9FXDHx4ePhz5yOwaCQrYayjligduz2GeT6zoZXF0sWsM7etFo19E4y8qHs8RAPCh101nZz2nA");'>
+                        <h1
+                            class="font-heading text-white text-5xl font-bold leading-tight tracking-wide md:text-7xl text-center">
+                            See it on. Before you put it on.</h1>
+                        <button
+                            class="mt-8 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white-soft text-base font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity">
+                            <span class="truncate">Try Our Virtual Mirror</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex w-full max-w-7xl flex-col px-4 md:px-10 lg:px-20 py-16">
+                    <h2
+                        class="font-heading text-charcoal dark:text-white-soft text-4xl font-bold leading-tight px-4 pb-6 pt-5">
+                        Featured Categories</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+                        <div class="group relative flex aspect-[3/4] flex-col justify-end overflow-hidden rounded-lg p-4 transition-transform duration-300 hover:scale-105"
+                            data-alt="A model wearing elegant ethnic wear.">
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBE29zwLRQbuaDhghTUGlrpJBjbQc6cL_2LLxZEVXwe7NOF9PgAs6WNZsFV7HhR1ybXZJqFz1pvUkJ0Gv3bLqpGHpLu7mnQ7fRkB3UsmES5Fe1q_ggcSaFy3VAJPD_sjxdTAUEoyUEeoJasICi0zUSxhgeSLsNIY_vixkEWdwaFO4c80V-ln7xd-7BAOgCkiwvnJi-sklsjwTZYELLUVK9V3Yo6i5XDaBNd37kHBNN4DXqp0TUv0zhIHw1Jw70LZ8EtBumn3ggZEJM");'>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent">
+                            </div>
+                            <p class="relative z-10 text-white text-2xl font-bold leading-tight">Ethnic Wear</p>
+                        </div>
+                        <div class="group relative flex aspect-[3/4] flex-col justify-end overflow-hidden rounded-lg p-4 transition-transform duration-300 hover:scale-105"
+                            data-alt="A woman in a stylish western dress.">
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBE29zwLRQbuaDhghTUGlrpJBjbQc6cL_2LLxZEVXwe7NOF9PgAs6WNZsFV7HhR1ybXZJqFz1pvUkJ0Gv3bLqpGHpLu7mnQ7fRkB3UsmES5Fe1q_ggcSaFy3VAJPD_sjxdTAUEoyUEeoJasICi0zUSxhgeSLsNIY_vixkEWdwaFO4c80V-ln7xd-7BAOgCkiwvnJi-sklsjwTZYELLUVK9V3Yo6i5XDaBNd37kHBNN4DXqp0TUv0zhIHw1Jw70LZ8EtBumn3ggZEJM");'>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent">
+                            </div>
+                            <p class="relative z-10 text-white text-2xl font-bold leading-tight">Western Dresses</p>
+                        </div>
+                        <div class="group relative flex aspect-[3/4] flex-col justify-end overflow-hidden rounded-lg p-4 transition-transform duration-300 hover:scale-105"
+                            data-alt="A man in a crisp formal shirt.">
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBE29zwLRQbuaDhghTUGlrpJBjbQc6cL_2LLxZEVXwe7NOF9PgAs6WNZsFV7HhR1ybXZJqFz1pvUkJ0Gv3bLqpGHpLu7mnQ7fRkB3UsmES5Fe1q_ggcSaFy3VAJPD_sjxdTAUEoyUEeoJasICi0zUSxhgeSLsNIY_vixkEWdwaFO4c80V-ln7xd-7BAOgCkiwvnJi-sklsjwTZYELLUVK9V3Yo6i5XDaBNd37kHBNN4DXqp0TUv0zhIHw1Jw70LZ8EtBumn3ggZEJM");'>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent">
+                            </div>
+                            <p class="relative z-10 text-white text-2xl font-bold leading-tight">Formal Shirts</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex w-full max-w-7xl flex-col px-4 md:px-10 lg:px-20 py-16">
+                    <h2
+                        class="font-heading text-charcoal dark:text-white-soft text-4xl font-bold leading-tight px-4 pb-6 pt-5">
+                        Shop by Brand</h2>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 p-4">
+                        <div
+                            class="flex h-24 items-center justify-center rounded-lg bg-primary/5 dark:bg-white/5 p-4 transition-colors hover:bg-primary/10 dark:hover:bg-white/10">
+                            <img alt="Brand A logo" class="h-10 w-auto object-contain"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJQFaxaDjLFFJTCbwHHkMwQQ7RjnKVpRJG_UHEoJRLTqG37JQb-rM1lJ-BKkFG2xfTXGXLQIO-O4RPcHfEcidXxYVdWxbN3RaeRSm0SDWhMmJAUEpDS15wFdH8IJ6wj1hZvPSz1vHnl-k0g6UEJS43T5WgNT0B3VGJ83Fs1gR9UEhOxWoXNxILAIKZm9t23SHmTD9PzQikYLcamo26O_CQ0F_FCSk1c3hJqBeUbndf1nDDT-RHyg_Xc4mxTs44-ZY4TIpdo83H8d4" />
+                        </div>
+                        <div
+                            class="flex h-24 items-center justify-center rounded-lg bg-primary/5 dark:bg-white/5 p-4 transition-colors hover:bg-primary/10 dark:hover:bg-white/10">
+                            <img alt="Brand B logo" class="h-10 w-auto object-contain"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs6f3DvF-e2BAJ5atUbUCZxOsA2AN5Tz597pq0WtsYJc78wr2xAEN8y6xCD1UF_aaJxyxEfsMc2yi_1tinjUyW7Ztkdc04lYs6uGzbmKdcADfZNPVcDxO1gkHzg6n7MBwn_hhxcRFpDxTUI5ZJACVneGegZ0v4HqHFEr6JLHiJRXu3Agw1G-wR4uJ_QMnzJoTpuYJWDhbirJ4uPyNuzrYvOnO142k1MDXaW_dfpCc_d0pf8RePYhQ2XnxzETOQwbnJragSfdxKesc" />
+                        </div>
+                        <div
+                            class="flex h-24 items-center justify-center rounded-lg bg-primary/5 dark:bg-white/5 p-4 transition-colors hover:bg-primary/10 dark:hover:bg-white/10">
+                            <img alt="Brand C logo" class="h-10 w-auto object-contain"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeevyCYspkls09-hxSHG7_4O48OJ0zp-zPNiouPr_BEZQh_J37xPPDEKgCTQKLT31khHxdXIWdpZz-eAkWyliTrqWgpQk0AwugcwVKLfV83aliAnzSzpyNWxum_C77F7KnE25UC1sYiyJX3vpwrgPI4FvQ7DsxSj7AI4B2kl3a0tPcPtyrILqnYo-ML1CtWfshFzGUvVnipxVMTJ2HKx71ro7ZwV0ELFx19rQwyaB-jXmuyAC_sDtSYTDZfU_Sb6QFgCwPRXEtbpc" />
+                        </div>
+                        <div
+                            class="flex h-24 items-center justify-center rounded-lg bg-primary/5 dark:bg-white/5 p-4 transition-colors hover:bg-primary/10 dark:hover:bg-white/10">
+                            <img alt="Brand D logo" class="h-10 w-auto object-contain"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVYaVT9FwL3gQdssnKxSa1LU1_5iDRrxrrrhY7jEfYoutnvKIzXZx_o996xeJPPZqkdGHIUZFRftoqXIumhizgeISKtIrlJIOrdd6sBAzTY4vTtEaCTXBjO7SlXTThkD_NThIAJhFigaiskkkn9w_kF837R4W13LMKtXgk9z65PzD_Sds1VG7OgUtRbWzjpodRiwPPaLl1S2pI2iwFXs5kUc561VI55BIKWnSDBZh0HkBySSenBA_O2R_A2_OXY1OdlZj3Zsb3HXU" />
+                        </div>
+                        <div
+                            class="flex h-24 items-center justify-center rounded-lg bg-primary/5 dark:bg-white/5 p-4 transition-colors hover:bg-primary/10 dark:hover:bg-white/10">
+                            <img alt="Brand E logo" class="h-10 w-auto object-contain"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPNxV8DZZD6islhjz78aBbXKfSyGEqpyiHoTjANQbQIe5Cyz4kIfMizWvtZXfLUACZf7qc-HN9U8395K7Z1QkBuF_eV1cMLdXq4c_xv-Xan8OOHVP7KUebh8vwusykfDhtOUGsjLTNe2bYTHnfQeZn0blCA9zqPxurTa1cA_MwThPOfYQr2PZI4wwrOHm733FBm2fRFtjGzvvV03Reibirlv85BUBP84saBpuOBq4jl4WIgamlI8Au4x1q73KOVoVLm7-YYBqRm1g" />
+                        </div>
+                        <div
+                            class="flex h-24 items-center justify-center rounded-lg bg-primary/5 dark:bg-white/5 p-4 transition-colors hover:bg-primary/10 dark:hover:bg-white/10">
+                            <img alt="Brand F logo" class="h-10 w-auto object-contain"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFzsTjXpvoOokooAx7AsG40XfG8E6AtmWYkCGj7Mg-MQP8Sm1Mt-iFBPf3Hwu9sKnZnpNt40g104mxD_keaj3Pw8WxLGMxYqjuPsaTDrz8SIGT6I_NggoB8YN-ZZ95bwCZjzW9m3aPoWsEcBfyE4oR2kKNynWdFIGhi_ltoNo8XPUvmeJWh-xhyoD4GmHxIkbGLG4h0QaHgz7g7xryHf9xaBb5IHMDbB4BTWLr4Apyi-ur5tC9B8XyBQJm1-4VSI-S-m8bbSmTZwA" />
+                        </div>
+                    </div>
+                </div>
+                <div class="flex w-full max-w-7xl flex-col px-4 md:px-10 lg:px-20 py-16">
+                    <h2
+                        class="font-heading text-charcoal dark:text-white-soft text-4xl font-bold leading-tight px-4 pb-6 pt-5">
+                        New Arrivals</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+                        <div class="group flex flex-col gap-2 transition-transform duration-300 hover:-translate-y-1">
+                            <div class="overflow-hidden rounded-lg">
+                                <img class="aspect-[3/4] w-full bg-cover bg-center object-cover transition-transform duration-300 group-hover:scale-105"
+                                    data-alt="A stylish blue floral print dress on a mannequin."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU7FCfGOrNCh7XYBBoc7EhUrjHL7iQrqWLuMPXjLntJpKwx_nziS8tfWOBIqsIcHlCgJ46Cx6s04gx7_4s_xs57g7MAfo8ze7K_yrIaDcNFjzRSRiP5Jk24bmZHqPhq1jPq1JgThKZCHzvXzw3zYfxlXpRQ3i72pQIzQxCcJqsJ6F6YeRF50MxfHCqnh8elIRYepNPqgrVGxWEbv21seVy8UekC9l0G0vOXeiIZcfm8KzUZM2YaoJWo3hvJI5ej5yRaD7eLuM9la4" />
+                            </div>
+                            <div class="px-1">
+                                <p class="text-sm font-semibold text-charcoal/70 dark:text-white-soft/70">Brand Name</p>
+                                <h3 class="font-medium text-charcoal dark:text-white-soft">Floral Print Maxi Dress</h3>
+                                <p class="font-bold text-primary">$129.99</p>
+                            </div>
+                        </div>
+                        <div class="group flex flex-col gap-2 transition-transform duration-300 hover:-translate-y-1">
+                            <div class="overflow-hidden rounded-lg">
+                                <img class="aspect-[3/4] w-full bg-cover bg-center object-cover transition-transform duration-300 group-hover:scale-105"
+                                    data-alt="A man wearing a modern linen shirt."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQJTFgUQTqQMrxaJepplQoh0qaTCC8tJXUzcPz4nRci0J16mBL76kXGLQJ24HCfyTSHyam3_GjKmxlreW0aYoQkma8cbUpq0Me0FS1xVnl7gH7mkdmY50LhpQ6p2MZNgpGiIINvWHvyixY0fCfL7Iz4uybj1BwiA4tIDo-TrV3wy2EWqCf09rKguBca3yA0sPtf6gmriWpy5pV0WD3l5jFQlMpBQoVyAX5pgETTwbEjeUF_JjlWeqhdDrS7M3S4MZO9JCnsdRsuLY" />
+                            </div>
+                            <div class="px-1">
+                                <p class="text-sm font-semibold text-charcoal/70 dark:text-white-soft/70">Brand Name</p>
+                                <h3 class="font-medium text-charcoal dark:text-white-soft">Modern Linen Shirt</h3>
+                                <p class="font-bold text-primary">$89.50</p>
+                            </div>
+                        </div>
+                        <div class="group flex flex-col gap-2 transition-transform duration-300 hover:-translate-y-1">
+                            <div class="overflow-hidden rounded-lg">
+                                <img class="aspect-[3/4] w-full bg-cover bg-center object-cover transition-transform duration-300 group-hover:scale-105"
+                                    data-alt="A pair of elegant high-heeled shoes."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEq6hLNlNuBid0UnygS96EIzKJaCCG54Q5wxEh42tRQvU-RbtiLm3J7djS6KCimudKKokFmvpMPjDPR48TCmJ4wtX7P4no3pQ4pLu6hHAkk37mx3nvHGuM8V-6sH7kLIizj4jS2MLDrJrL8AiNJyr681CYiNRLZpRH45aGQ1yw344yLaU1j3bHI7QMxrA4mWYwqQtK2eLdjVaBAW-I_z_BNlW049u323zTjwcgKYTTGmNw68ERn9g9DElPDx15TeG1PH-Pgf_1zTU" />
+                            </div>
+                            <div class="px-1">
+                                <p class="text-sm font-semibold text-charcoal/70 dark:text-white-soft/70">Brand Name</p>
+                                <h3 class="font-medium text-charcoal dark:text-white-soft">Classic Pointed Heels</h3>
+                                <p class="font-bold text-primary">$199.00</p>
+                            </div>
+                        </div>
+                        <div class="group flex flex-col gap-2 transition-transform duration-300 hover:-translate-y-1">
+                            <div class="overflow-hidden rounded-lg">
+                                <img class="aspect-[3/4] w-full bg-cover bg-center object-cover transition-transform duration-300 group-hover:scale-105"
+                                    data-alt="A woman wearing a tailored blazer jacket."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmmK09DP3gS0I9UkE9jZjOFV1gepL5J10jdNxcuQ5aGfDi0Tw5wTLpbfsFax3PDNELQwyo-ODZLM4LE3zDF3BQh6-YYU4pFpNURCCGrYf-pdmyYg_AkaZ467IN1MhaoHhtXsQXT94AdGHhy49v0K_hf7rXF7Uo0DTNGpCBPQ2SpW6vuDTaReCxUuLcUWWyb_goRhrR1GiL-klhT3OG04E2TttLnTnwoUaaZTRGOgfUOm03ByDjyQhwC1_2kjbyhR_gdQQvvFw_Rb0" />
+                            </div>
+                            <div class="px-1">
+                                <p class="text-sm font-semibold text-charcoal/70 dark:text-white-soft/70">Brand Name</p>
+                                <h3 class="font-medium text-charcoal dark:text-white-soft">Tailored Blazer Jacket</h3>
+                                <p class="font-bold text-primary">$245.00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full bg-primary/5 dark:bg-white/5 py-20">
+                    <div class="flex w-full max-w-7xl flex-col mx-auto px-4 md:px-10 lg:px-20">
+                        <div class="text-center">
+                            <h2
+                                class="font-heading text-charcoal dark:text-white-soft text-4xl font-bold leading-tight">
+                                Virtual Try-On in 3 Easy Steps</h2>
+                            <p class="mt-2 text-charcoal/80 dark:text-white-soft/80 max-w-2xl mx-auto">Experience the
+                                future of shopping. See how our clothes look on you before you buy, right from the
+                                comfort of your home.</p>
+                        </div>
+                        <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-12">
+                            <div class="flex flex-col items-center text-center">
+                                <div
+                                    class="flex h-20 w-20 items-center justify-center rounded-full bg-primary text-white-soft">
+                                    <span class="material-symbols-outlined text-4xl">photo_camera</span>
+                                </div>
+                                <p class="mt-4 text-lg font-bold text-charcoal dark:text-white-soft">Step 1</p>
+                                <h3 class="mt-1 font-heading text-2xl font-bold text-charcoal dark:text-white-soft">
+                                    Upload Your Photo</h3>
+                                <p class="mt-2 text-charcoal/80 dark:text-white-soft/80">Start by uploading a full-body
+                                    picture of yourself. Our AI will create your personalized model.</p>
+                            </div>
+                            <div class="flex flex-col items-center text-center">
+                                <div
+                                    class="flex h-20 w-20 items-center justify-center rounded-full bg-primary text-white-soft">
+                                    <span class="material-symbols-outlined text-4xl">checkroom</span>
+                                </div>
+                                <p class="mt-4 text-lg font-bold text-charcoal dark:text-white-soft">Step 2</p>
+                                <h3 class="mt-1 font-heading text-2xl font-bold text-charcoal dark:text-white-soft">
+                                    Select an Item</h3>
+                                <p class="mt-2 text-charcoal/80 dark:text-white-soft/80">Browse our collection and
+                                    choose any piece of clothing you'd like to try on virtually.</p>
+                            </div>
+                            <div class="flex flex-col items-center text-center">
+                                <div
+                                    class="flex h-20 w-20 items-center justify-center rounded-full bg-primary text-white-soft">
+                                    <span class="material-symbols-outlined text-4xl">visibility</span>
+                                </div>
+                                <p class="mt-4 text-lg font-bold text-charcoal dark:text-white-soft">Step 3</p>
+                                <h3 class="mt-1 font-heading text-2xl font-bold text-charcoal dark:text-white-soft">See
+                                    it on You</h3>
+                                <p class="mt-2 text-charcoal/80 dark:text-white-soft/80">Instantly see a realistic image
+                                    of how the item looks on your body, helping you shop with confidence.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>

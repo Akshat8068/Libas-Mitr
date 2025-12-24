@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>User Profile Page</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#13b6ec",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101d22",
+                    },
+                    fontFamily: {
+                        display: ["Manrope", "sans-serif"],
+                    },
+                    borderRadius: { DEFAULT: "0.5rem", lg: "1rem", xl: "1.5rem", full: "9999px" },
+                },
+            },
+        };
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+    <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+        <!-- TopNavBar Component -->
+        <header
+            class="flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-b-[#233f48] px-4 sm:px-6 lg:px-10 py-3 bg-background-light dark:bg-background-dark">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-4 text-gray-800 dark:text-white">
+                    <div class="size-6 text-primary">
+                        <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">
+                        LibasMitr</h2>
+                </div>
+                <label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+                    <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                        <div
+                            class="text-gray-500 dark:text-[#92bbc9] flex border border-r-0 border-gray-300 dark:border-[#233f48] bg-white dark:bg-[#233f48] items-center justify-center pl-4 rounded-l-lg">
+                            <span class="material-symbols-outlined"> search </span>
+                        </div>
+                        <input
+                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-l-0 border-gray-300 dark:border-[#233f48] bg-white dark:bg-[#233f48] h-full placeholder:text-gray-500 dark:placeholder:text-[#92bbc9] px-4 text-sm font-normal leading-normal"
+                            placeholder="Search" value="" />
+                    </div>
+                </label>
+            </div>
+            <div class="flex flex-1 justify-end gap-4 md:gap-8">
+                <div class="hidden lg:flex items-center gap-9">
+                    <a class="text-gray-700 dark:text-white text-sm font-medium leading-normal" href="#">New In</a>
+                    <a class="text-gray-700 dark:text-white text-sm font-medium leading-normal" href="#">Clothing</a>
+                    <a class="text-gray-700 dark:text-white text-sm font-medium leading-normal" href="#">Collections</a>
+                    <a class="text-gray-700 dark:text-white text-sm font-medium leading-normal" href="#">Sale</a>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button
+                        class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-gray-100 dark:bg-[#233f48] text-gray-700 dark:text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                        <span class="material-symbols-outlined text-xl"> favorite </span>
+                    </button>
+                    <button
+                        class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-gray-100 dark:bg-[#233f48] text-gray-700 dark:text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                        <span class="material-symbols-outlined text-xl"> shopping_bag </span>
+                    </button>
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                        data-alt="User profile picture of Priya Sharma"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB7aMYeAQyEJmSMCm2aUrjqJ9P4Fyc3_TZzY9UeXWNUXD5wZV7dsvJGx8E2T-I-8GnrKvpN5wLOUVJxrYqG8ert87TkC-vwbyx6We-LNvq25nkVYqD6nKjxeu0ueN73yD07zO89BJMp61_PTMG-wFyPL7111wyuc-mywZX2lnI_LbXZR_BUzzozTUUNzOyWLS625MrzoBUzRJr1fChLvZtbITcozOMJBC3rSCZ3cE0gxVmiwBf_oX5YuHSdxYx3uIdk64KVRzPzTH8');">
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content Area -->
+        <main class="flex flex-1 w-full mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
+            <div class="flex w-full flex-col md:flex-row gap-8">
+                <!-- SideNavBar Component -->
+                <aside class="w-full md:w-64 flex-shrink-0">
+                    <div
+                        class="flex h-full flex-col justify-between bg-white dark:bg-[#111e22] p-4 rounded-xl border border-gray-200 dark:border-[#233f48]">
+                        <div class="flex flex-col gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                                    data-alt="User profile picture of Priya Sharma"
+                                    style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDGAxTxwN0JlZh53k2kMeWqfCb-yIxTdhXQgvoBTY6OhnBAhrJ2xfOMokAEKsvxkcUAUgA9wIo3Y1gHM-TksH90HwweRIsIJKpoCCyU8faubpWhdCqCeN9ISx8gG8gKmIKepEhKOCQuj5VkdUGwSLLf0VmWQ6Kpw_QY_oJ1lFGzTyCe-AgnPPxZ5SxI1xo0LaX0njjZs2SEeRsp1eIDozihB-Oygl4daoGT57zAzCyxtKZR-KtwzeprbZHxEEtRu3HDGKeovhOqL54');">
+                                </div>
+                                <div class="flex flex-col">
+                                    <h1 class="text-gray-900 dark:text-white text-base font-medium leading-normal">Priya
+                                        Sharma</h1>
+                                    <p class="text-gray-500 dark:text-[#92bbc9] text-sm font-normal leading-normal">
+                                        priya.sharma@email.com</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-2 mt-4">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 dark:bg-[#233f48]"
+                                    href="#">
+                                    <span class="material-symbols-outlined text-primary dark:text-white"> dashboard
+                                    </span>
+                                    <p class="text-primary dark:text-white text-sm font-medium leading-normal">Dashboard
+                                    </p>
+                                </a>
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-primary/20"
+                                    href="#">
+                                    <span class="material-symbols-outlined text-gray-600 dark:text-white"> package_2
+                                    </span>
+                                    <p class="text-gray-600 dark:text-white text-sm font-medium leading-normal">Order
+                                        History</p>
+                                </a>
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-primary/20"
+                                    href="#">
+                                    <span class="material-symbols-outlined text-gray-600 dark:text-white"> favorite
+                                    </span>
+                                    <p class="text-gray-600 dark:text-white text-sm font-medium leading-normal">My
+                                        Wishlist</p>
+                                </a>
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-primary/20"
+                                    href="#">
+                                    <span class="material-symbols-outlined text-gray-600 dark:text-white">
+                                        design_services </span>
+                                    <p class="text-gray-600 dark:text-white text-sm font-medium leading-normal">My
+                                        Measurements</p>
+                                </a>
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-primary/20"
+                                    href="#">
+                                    <span class="material-symbols-outlined text-gray-600 dark:text-white"> tune </span>
+                                    <p class="text-gray-600 dark:text-white text-sm font-medium leading-normal">
+                                        Preferences</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-4 mt-8">
+                            <button
+                                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em]">
+                                <span class="truncate">Logout</span>
+                            </button>
+                            <div class="flex flex-col gap-1 border-t border-gray-200 dark:border-[#233f48] pt-4">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-primary/20"
+                                    href="#">
+                                    <span class="material-symbols-outlined text-gray-600 dark:text-white"> settings
+                                    </span>
+                                    <p class="text-gray-600 dark:text-white text-sm font-medium leading-normal">Settings
+                                    </p>
+                                </a>
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-primary/20"
+                                    href="#">
+                                    <span class="material-symbols-outlined text-gray-600 dark:text-white"> help </span>
+                                    <p class="text-gray-600 dark:text-white text-sm font-medium leading-normal">Help
+                                        Center</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <!-- Profile Content Section -->
+                <div class="flex-1">
+                    <div class="flex flex-col gap-8">
+                        <!-- ProfileHeader Component -->
+                        <div
+                            class="flex p-6 @container bg-white dark:bg-[#111e22] rounded-xl border border-gray-200 dark:border-[#233f48]">
+                            <div
+                                class="flex w-full flex-col gap-4 @[520px]:flex-row @[520px]:justify-between @[520px]:items-center">
+                                <div class="flex gap-4">
+                                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-24 w-24 sm:h-32 sm:w-32 flex-shrink-0"
+                                        data-alt="User profile picture of Priya Sharma"
+                                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAAFKBF_EuENymGnaDKdwuYmNp03xMd_L6SYU1DpIuVE9YoV3cC4OjDHuUNR6w786VcbzlLc17OQ1xcj8zuJTvFcWVD7V1L5EqY8spKcAW49eQdN3B0Tn5j1KcipKaCFypSssUbUD6Ht7q-_0XbiIxObCCt5FbUciuJhd3l66zn1UJ5zNap4epjdZQhqLInyLY-0yL1Bm-AwoG1W-9gIRybNsuzJ1NX7Jk3hok71PBMouH4YdNiOR0z_MXHMmPYE0tyY_e8B1ze4xk');">
+                                    </div>
+                                    <div class="flex flex-col justify-center">
+                                        <p
+                                            class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">
+                                            Welcome back, Priya!</p>
+                                        <p
+                                            class="text-gray-500 dark:text-[#92bbc9] text-base font-normal leading-normal">
+                                            Gold Member</p>
+                                        <p
+                                            class="text-gray-500 dark:text-[#92bbc9] text-base font-normal leading-normal">
+                                            Joined in 2023</p>
+                                    </div>
+                                </div>
+                                <button
+                                    class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-gray-100 dark:bg-[#233f48] text-gray-800 dark:text-white text-sm font-bold leading-normal tracking-[0.015em] w-full max-w-[480px] @[480px]:w-auto">
+                                    <span class="truncate">Edit Profile</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Profile Details Section -->
+                        <div class="bg-white dark:bg-[#111e22] rounded-xl border border-gray-200 dark:border-[#233f48]">
+                            <!-- SectionHeader Component -->
+                            <div class="border-b border-gray-200 dark:border-[#233f48]">
+                                <h2
+                                    class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-6 pb-3 pt-5">
+                                    My Profile</h2>
+                            </div>
+                            <!-- DescriptionList Component -->
+                            <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+                                <div
+                                    class="flex flex-col gap-1 border-t border-solid border-gray-200 dark:border-t-[#325a67] py-4">
+                                    <p class="text-gray-500 dark:text-[#92bbc9] text-sm font-normal leading-normal">Full
+                                        Name</p>
+                                    <p class="text-gray-900 dark:text-white text-sm font-normal leading-normal">Priya
+                                        Sharma</p>
+                                </div>
+                                <div
+                                    class="flex flex-col gap-1 border-t border-solid border-gray-200 dark:border-t-[#325a67] py-4">
+                                    <p class="text-gray-500 dark:text-[#92bbc9] text-sm font-normal leading-normal">
+                                        Email Address</p>
+                                    <p class="text-gray-900 dark:text-white text-sm font-normal leading-normal">
+                                        priya.sharma@email.com</p>
+                                </div>
+                                <div
+                                    class="flex flex-col gap-1 border-t border-solid border-gray-200 dark:border-t-[#325a67] py-4">
+                                    <p class="text-gray-500 dark:text-[#92bbc9] text-sm font-normal leading-normal">
+                                        Phone Number</p>
+                                    <p class="text-gray-900 dark:text-white text-sm font-normal leading-normal">+91
+                                        98765 43210</p>
+                                </div>
+                                <div
+                                    class="flex flex-col gap-1 border-t border-solid border-gray-200 dark:border-t-[#325a67] py-4">
+                                    <p class="text-gray-500 dark:text-[#92bbc9] text-sm font-normal leading-normal">
+                                        Default Address</p>
+                                    <p class="text-gray-900 dark:text-white text-sm font-normal leading-normal">123,
+                                        Rose Villa, Juhu, Mumbai, 400049</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
