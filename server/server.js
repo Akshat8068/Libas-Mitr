@@ -1,7 +1,7 @@
 import express from "express"
 import colors from "colors"
 import connectDB from "./config/dbConfig.js"
-
+import dotenv from "dotenv"
 // Local Routes
 
 import authRoutes from "./routes/authRoutes.js"
@@ -12,7 +12,7 @@ import cartRoutes from "./routes/cartRoutes.js"
 import couponRoutes from "./routes/couponRoutes.js"
 import virtualTryOnRoutes from "./routes/virtualTryOnRoutes.js"
 import errorHandler from "./middleware/errorHandler.js"
-
+dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 5000
 
