@@ -1,10 +1,47 @@
 import { Eye, Mail } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SignImgText from "../components/Sign/SignImgText";
 import SectionHeader from "../components/Sign/SectionHeader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
+    const { user, isLoading, isSuccess, isError, message } = useSelector(state => state.auth)
+
+    const [formData, setfromData] = useState({
+        email: "", password: ""
+    })
+    const { email, password } = formData
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const handleChange = (e) => {
+        e.preventDefault()
+        setfromData({
+            ...formData
+            [e.target.name] = e.target.value
+        })
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(lo)
+    }
+
+    useEffect(() => {
+        if (user) {
+            navigate("/")
+        }
+        if (isError && message) {
+            toast.error(message)
+        }
+    }, [user, isError, message])
+
+    if (isLoading) {
+        return (
+            <h1 className="text-center text-2xl font-semibold">Loading....</h1>
+        )
+    }
     return (
         <div className="min-h-screen flex flex-col md:flex-row w-full">
 
@@ -33,7 +70,7 @@ const Login = () => {
                             {/* Form */}
                             <form
                                 className="space-y-5 m-4"
-                                onSubmit={(e) => e.preventDefault()}
+                                onSubmit={handleSubmit}
                             >
                                 {/* Email */}
                                 <div className="space-y-2 text-left">
@@ -44,6 +81,9 @@ const Login = () => {
                                     <div className="relative group">
                                         <input
                                             type="text"
+                                            name="email"
+                                            value={email}
+                                            onChange={handleChange}
                                             placeholder="name@example.com"
                                             className="w-full h-12 px-4 rounded-lg border border-[#dbe6e6] bg-white text-[#212121] placeholder-[#608a8a] focus:border-[#044343] focus:ring-1 focus:ring-[#044343] transition-all outline-none"
                                         />
@@ -73,6 +113,9 @@ const Login = () => {
                                     <div className="relative group">
                                         <input
                                             type="password"
+                                            name="password"
+                                            value={password}
+                                            onChange={handleChange}
                                             placeholder="Enter your password"
                                             className="w-full h-12 px-4 pr-12 rounded-lg border border-[#dbe6e6] bg-white text-[#212121] placeholder-[#608a8a] focus:border-[#044343] focus:ring-1 focus:ring-[#044343] transition-all outline-none"
                                         />
@@ -96,7 +139,7 @@ const Login = () => {
                         <div className="mt-8 text-center text-sm">
                             <p className="text-gray-600 dark:text-gray-400">
                                 Already have an account?{" "}
-                                <Link to={"/register"} className="font-bold text-black hover:underline">
+                                <Link to="/register" className="font-bold text-black hover:underline">
                                     Register
                                 </Link>
                             </p>

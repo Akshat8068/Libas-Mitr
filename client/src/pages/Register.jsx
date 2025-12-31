@@ -1,9 +1,55 @@
 import { Mail, User, Phone, MapPin } from "lucide-react";
 import SignImgText from "../components/Sign/SignImgText";
 import SectionHeader from "../components/Sign/SectionHeader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { registerUser } from "../features/auth/authSlice";
 
 const Register = () => {
+
+    const{user,isLoading,isError,message}=useSelector(state=>state.auth)
+
+    const [formData, setfromData] = useState({
+        name:"",email:"",phone:"",password:"",confirmPassword:"",address:""
+    })
+    const { name, email, password, confirmPassword, phone, address } = formData
+    
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    
+    const handleChange = (e) => {
+        e.preventDefault()
+        setfromData({
+            ...formData,
+            [e.target.name]:e.target.value,
+        })
+    }
+   
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (password !== confirmPassword) {
+            toast.error("Password And ConfirmPassword are not same")
+        } else {
+            dispatch(registerUser(formData))
+        }
+    }
+
+    useEffect(() => {
+        if (user) {
+            navigate("/")
+        }
+        if (isError && message) {
+            toast.error(message)
+        }
+    }, [user, isError, message])
+    
+    if (isLoading) {
+        return (
+            <h1 className="text-center text-2xl font-semibold">Loading....</h1>
+        )
+    }
     return (
         <div className="bg-[#f8f8f8] dark:bg-[#102222] min-h-screen flex flex-col text-text-main dark:text-white">
 
@@ -36,7 +82,7 @@ const Register = () => {
 
                             {/* HEADER */}
                             <SectionHeader heading={"Create Account"} descripition={"Join our community of fashion innovators"}>
-                                <form className="space-y-5 m-2" onSubmit={(e) => e.preventDefault()}>
+                                <form onSubmit={handleSubmit} className="space-y-5 m-2" >
 
                                     {/* FULL NAME */}
                                     <div className="space-y-1.5 text-left">
@@ -50,6 +96,9 @@ const Register = () => {
                                             <input
                                                 id="fullName"
                                                 type="text"
+                                                name="name"
+                                                value={name}
+                                                onChange={handleChange}
                                                 placeholder="e.g. Aditi Sharma"
                                                 className="block w-full border rounded-lg border-gray-500 dark:border-gray-600 bg-white dark:bg-[#253838] pl-10 py-3 text-sm focus:border-[#044343] focus:ring-[#044343] dark:text-white"
                                             />
@@ -72,6 +121,10 @@ const Register = () => {
                                             <input
                                                 id="phone"
                                                 type="tel"
+                                                name="phone"
+                                                value={phone}
+                                                onChange={handleChange}
+                                                
                                                 placeholder="+91 98765 43210"
                                                 className="block w-full rounded-lg border border-gray-500 dark:border-gray-600 bg-white dark:bg-[#253838] pl-10 py-3 text-sm
                        focus:border-[#044343] focus:ring-[#044343] dark:text-white"
@@ -91,6 +144,9 @@ const Register = () => {
                                             <input
                                                 id="email"
                                                 type="email"
+                                                name="email"
+                                                value={email}
+                                                onChange={handleChange}
                                                 placeholder="name@example.com"
                                                 className="block w-full rounded-lg border border-gray-500 dark:border-gray-600 bg-white dark:bg-[#253838] pl-10 py-3 text-sm focus:border-[#044343] focus:ring-[#044343] dark:text-white"
                                             />
@@ -108,6 +164,9 @@ const Register = () => {
                                                 id="password"
                                                 type="password"
                                                 placeholder="••••••••"
+                                                name="password"
+                                                value={password}
+                                                onChange={handleChange}
                                                 className="block w-full border rounded-lg border-gray-500 dark:border-gray-600 bg-white dark:bg-[#253838] pl-10 pr-10 py-3 text-sm focus:border-[#044343] focus:ring-[#044343] dark:text-white"
                                             />
 
@@ -125,6 +184,9 @@ const Register = () => {
                                                 id="confirmPassword"
                                                 type="password"
                                                 placeholder="••••••••"
+                                                name="confirmPassword"
+                                                value={confirmPassword}
+                                                onChange={handleChange}
                                                 className="block w-full border rounded-lg border-gray-500 dark:border-gray-600 bg-white dark:bg-[#253838] pl-10 py-3 text-sm focus:border-[#044343] focus:ring-[#044343] dark:text-white"
                                             />
                                         </div>
@@ -146,6 +208,9 @@ const Register = () => {
                                             <textarea
                                                 id="address"
                                                 rows={3}
+                                                name="address"
+                                                value={address}
+                                                onChange={handleChange}
                                                 placeholder="House no, Street, City, State, Pincode"
                                                 className="block w-full rounded-lg border border-gray-500 dark:border-gray-600 bg-white dark:bg-[#253838] pl-10 py-3 text-sm resize-none
                        focus:border-[#044343] focus:ring-[#044343] dark:text-white"
@@ -163,7 +228,7 @@ const Register = () => {
                             <div className="mt-8 text-center text-sm">
                                 <p className="text-gray-600 dark:text-gray-400">
                                     Already have an account?{" "}
-                                    <Link to={"/login"} className="font-bold text-black hover:underline">
+                                    <Link to="/login" className="font-bold text-black hover:underline">
                                         Log In
                                     </Link>
                                 </p>

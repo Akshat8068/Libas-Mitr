@@ -1,86 +1,131 @@
-import React, { useState } from "react";
-import { Search, ShoppingCart, User } from "lucide-react";
+import { ShoppingCart, X, Menu, LogIn, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Navbar = () => {
-    const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-    // Fake authentication check
-    const isLoggedIn = false; // Agar login hai to true, nahi to false
+  const isLoggedIn = true; // change to true to test logged in
+  const menuItems = ["Men", "Women", "Party", "Mitr"];
 
-    return (
-        <nav className="fixed top-0 left-0 z-50 w-full h-[10vh] bg-white text-black flex items-center shadow-md">
-            <div className="mx-auto w-full max-w-7xl px-6 flex items-center justify-between">
-                {/* Left: Logo */}
-                <Link to={"/"} className="logo-text tracking-widest text-center font-semibold text-3xl">
-                    LibasMitr
-                </Link>
+  return (
+    <header className="bg-white shadow fixed top-0 left-0 w-full z-50">
+      <div className="container mx-auto flex items-center justify-between py-4 relative">
 
-                {/* Center: Links */}
-                <div className="flex-1 hidden lg:flex justify-center items-center gap-8 text-md font-light">
-                    <Link to="/men" className="hover:text-gray-400 transition">Men</Link>
-                    <Link to="/women" className="hover:text-gray-400 transition">Women</Link>
-                    <Link to="/kids" className="hover:text-gray-400 transition">Kids</Link>
-                    <Link to="/ethnic" className="hover:text-gray-400 transition">Collections</Link>
-                    <Link to="/western" className="hover:text-gray-400 transition">New Arrivals</Link>
-                </div>
+        {/* Logo */}
+        <div className="flex-1">
+          <Link to="/" className="text-3xl font-bold logo-text">
+            LibasMitr
+          </Link>
+        </div>
 
-                {/* Right: Search + Icons */}
-                <div className="flex items-center gap-5 relative">
-                    {/* Search Bar */}
-                    <div className="hidden md:flex items-center border border-gray-200 rounded-full px-4 py-2">
-                        <Search size={18} className="text-black" />
-                        <input
-                            type="text"
-                            placeholder="Search styles, sarees, kurtas..."
-                            className="bg-transparent outline-none text-black text-sm ml-2 w-48"
-                        />
-                    </div>
-
-                    {/* Cart Icon */}
-                    <button className="hover:text-gray-400 transition">
-                        <ShoppingCart size={22} />
-                    </button>
-
-                    {/* Profile Icon */}
-                    <div className="relative">
-                        <button
-                            className="hover:text-gray-400 transition"
-                            onClick={() => setDropdownOpen(!dropdownOpen)}
-                        >
-                            <User size={22} />
-                        </button>
-
-                        {/* Dropdown Menu */}
-                        {dropdownOpen && (
-                            <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                                {isLoggedIn ? (
-                                    <>
-                                        <Link to="/profile" className="block px-4 py-2 text-sm hover:bg-gray-100" onClick={() => setDropdownOpen(false)}>
-                                            My Profile
-                                        </Link>
-                                        <button className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100" onClick={() => {setDropdownOpen(false);}}>
-                                            Logout
-                                        </button>
-                                    </>
-                                ) : (
-                                        <>
-                                            <Link to="/register" className="logo-text block w-full px-4 py-2 text-sm text-black font-medium bg-white rounded-t-md hover:bg-gray-100 transition" onClick={() => setDropdownOpen(false)}>
-                                                Register
-                                            </Link>
-                                            <Link to="/login" className="logo-text block w-full px-4 py-2 text-sm text-white font-medium bg-black rounded-b-md hover:bg-gray-800 transition" onClick={() => setDropdownOpen(false)}>
-                                                Login
-                                            </Link>
-                                        </>
-                                        
-                                )}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
+        {/* Desktop Menu (center) */}
+        <nav className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
+          <ul className="flex gap-10">
+            {menuItems.map((item) => (
+              <li key={item} className="relative group">
+                <a
+                  href="/"
+                  className="text-xl font-semibold text-gray-900 pb-1 relative
+                  after:content-[''] after:absolute after:left-0 after:bottom-0
+                  after:h-[2px] after:bg-red-500 after:w-full
+                  after:origin-left after:scale-x-0
+                  after:transition-transform after:duration-300
+                  group-hover:after:scale-x-100"
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
         </nav>
-    );
+
+        {/* Right Section (Desktop: Search + Cart + Login/Logout) */}
+        <div className="flex items-center gap-4">
+
+          {/* Search bar */}
+          <div className="hidden md:block">
+            <input
+              type="text"
+              placeholder="Search products..."
+              className="border border-gray-300 rounded-full px-4 py-1 w-48 outline-none focus:ring-1 focus:ring-red-500"
+            />
+          </div>
+
+          {/* Cart */}
+          <button className="relative">
+            <ShoppingCart className="w-6 h-6" />
+            <span className="absolute -top-3 left-3 text-xs text-gray-900 font-bold">0</span>
+          </button>
+
+          {/* Login / Logout (Desktop Only) */}
+          <div className="hidden md:flex">
+            <Link
+              to={isLoggedIn ? "/logout" : "/login"}
+              className="flex items-center gap-1 text-gray-900 hover:text-red-500 transition"
+            >
+              {isLoggedIn ? <LogOut className="w-5 h-5" /> : <LogIn className="w-5 h-5" />}
+              <span>{isLoggedIn ? "Logout" : "Login"}</span>
+            </Link>
+          </div>
+
+          {/* Mobile Hamburger */}
+          <button className="md:hidden" onClick={() => setMobileMenuOpen(true)}>
+            <Menu size={28} />
+          </button>
+
+        </div>
+      </div>
+
+      {/* Search bar (mobile + tablet only) */}
+      <div className="block lg:hidden px-6 mb-4">
+        <input
+          type="text"
+          placeholder="Search products..."
+          className="w-full border border-gray-300 rounded-full px-4 py-1 outline-none focus:ring-1 focus:ring-red-500"
+        />
+      </div>
+
+      {/* Mobile Slide Menu */}
+      {mobileMenuOpen && (
+        <div className="fixed top-0 right-0 w-64 h-full bg-white shadow-lg z-50 flex flex-col">
+          {/* Close Button */}
+          <div className="flex justify-end p-4">
+            <button onClick={() => setMobileMenuOpen(false)}>
+              <X size={24} />
+            </button>
+          </div>
+
+          {/* Menu Items */}
+          <ul className="flex flex-col gap-4 px-6">
+            {menuItems.map((item) => (
+              <li key={item}>
+                <Link
+                  to="/"
+                  className="text-lg font-semibold text-gray-900"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          {/* Login / Logout (Mobile Only) */}
+          <div className="mt-auto px-6 pb-6">
+            <Link
+              to={isLoggedIn ? "/logout" : "/login"}
+              className="flex items-center justify-center gap-2 text-lg font-medium text-white bg-black rounded py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {isLoggedIn ? <LogOut className="w-5 h-5" /> : <LogIn className="w-5 h-5" />}
+              <span>{isLoggedIn ? "Logout" : "Login"}</span>
+            </Link>
+          </div>
+        </div>
+      )}
+    </header>
+  );
 };
 
 export default Navbar;

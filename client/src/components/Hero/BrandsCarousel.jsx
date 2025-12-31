@@ -14,25 +14,33 @@ import Prada from "../../assets/Brands/Parda.png";
 import PeterEngland from "../../assets/Brands/PeterEngland.png";
 import Puma from "../../assets/Brands/Puma.png";
 import Versace from "../../assets/Brands/Versace.png";
-const brands = [Adidas, AllenSolly, AmericanEagle, BeingHuman, Gucci, HM, JackJones, Levis, LouisVuitton,
-    Mufti,Nike,Prada,PeterEngland,Puma,Versace];
+
+const brands = [
+    Adidas, AllenSolly, AmericanEagle, BeingHuman, Gucci, HM, JackJones, Levis,
+    LouisVuitton, Mufti, Nike, Prada, PeterEngland, Puma, Versace
+];
 
 const BrandsCarousel = () => {
     return (
-        <>
-            
-            <div className="relative overflow-hidden w-full  py-4">
-                <div className="flex animate-marquee space-x-2">
-                    {brands.concat(brands).map((brand, idx) => (
-                        <div key={idx} className="flex-shrink-0 w-36">
-                            <img src={brand} alt={`brand-${idx}`} className="object-contain w-full h-20" />
-                        </div>
-                    ))}
-                </div>
+        <div className="relative overflow-hidden w-full py-4">
+            <div className="flex animate-marquee space-x-2 md:space-x-4 lg:space-x-6">
+                {brands.concat(brands).map((brand, idx) => (
+                    <div
+                        key={idx}
+                        className="flex-shrink-0 w-20 sm:w-24 md:w-28 lg:w-36"
+                    >
+                        <img
+                            src={brand}
+                            alt={`brand-${idx}`}
+                            className="object-contain w-full h-16 sm:h-18 md:h-20 lg:h-20"
+                        />
+                    </div>
+                ))}
+            </div>
 
-                {/* Tailwind animation */}
-                <style>
-                    {`
+            {/* Tailwind animation */}
+            <style>
+                {`
           @keyframes marquee {
             0% { transform: translateX(0%); }
             100% { transform: translateX(-50%); }
@@ -42,9 +50,8 @@ const BrandsCarousel = () => {
             animation: marquee 20s linear infinite;
           }
         `}
-                </style>
-            </div>
-        </>
+            </style>
+        </div>
     );
 };
 

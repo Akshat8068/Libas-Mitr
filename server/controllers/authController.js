@@ -7,6 +7,8 @@ const registerUser = async (req, res) => {
     // check all filed are filled
     const { name, email, password, phone, address } = req.body
 
+    console.log(req.body)
+
     if (!name || !email || !password || !phone || !address) {
         res.status(409)
         throw new Error("Please Fill all deatils")

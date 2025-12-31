@@ -1,5 +1,4 @@
-import { ShoppingBag } from "lucide-react";
-import React from "react";
+
 
 /* ===== PRODUCTS DATA ===== */
 const newArrivalsData = [
@@ -42,10 +41,11 @@ const newArrivalsData = [
 ];
 
 /* ===== COMPONENT ===== */
+/* ===== COMPONENT ===== */
 const NewArrivals = () => {
     return (
         <section className="py-16 bg-white border-t border-gray-100">
-            <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+            <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
 
                 {/* Header */}
                 <div className="flex justify-between items-end mb-10">
@@ -55,9 +55,12 @@ const NewArrivals = () => {
                 </div>
 
                 {/* Products */}
-                <div className="flex overflow-x-auto hide-scrollbar gap-6 pb-4">
+                <div className="flex overflow-x-auto hide-scrollbar gap-4 sm:gap-6 pb-4 snap-x snap-mandatory">
                     {newArrivalsData.map((item, index) => (
-                        <div key={index} className="min-w-[280px] group">
+                        <div
+                            key={index}
+                            className="min-w-[220px] sm:min-w-[280px] flex-shrink-0 group snap-center"
+                        >
                             <div className="relative aspect-[3/4] bg-gray-100 rounded-lg overflow-hidden mb-4">
                                 <div
                                     className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
@@ -66,11 +69,10 @@ const NewArrivals = () => {
 
                                 {/* Hover CTA */}
                                 <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
-                                    <button className=" w-full bg-white text-[#111818] py-3 rounded-md font-medium text-sm shadow-md translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black hover:text-white ">
+                                    <button className="w-full bg-white text-[#111818] py-3 rounded-md font-medium text-sm shadow-md translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black hover:text-white">
                                         Add to Cart
                                     </button>
                                 </div>
-
 
                                 {item.tag && (
                                     <span className="absolute top-3 left-3 bg-white/90 px-2 py-1 text-xs font-bold rounded">
@@ -79,7 +81,7 @@ const NewArrivals = () => {
                                 )}
                             </div>
 
-                            <p className="text-xs text-gray-500 font-medium mb-1">
+                            <p className="text-xs text-gray-500 font-medium mb-1 truncate">
                                 {item.brand}
                             </p>
                             <h3 className="text-base font-medium text-[#111818] truncate">
@@ -97,3 +99,4 @@ const NewArrivals = () => {
 };
 
 export default NewArrivals;
+
