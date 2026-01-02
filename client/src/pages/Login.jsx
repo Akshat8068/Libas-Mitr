@@ -21,8 +21,8 @@ const Login = () => {
     const handleChange = (e) => {
         
         setfromData({
-            ...formData
-            [e.target.name] = e.target.value
+            ...formData,
+            [e.target.name] :e.target.value
         })
     }
     const handleSubmit = (e) => {

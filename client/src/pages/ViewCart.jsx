@@ -1,6 +1,6 @@
 import React from "react";
 import BreadCrumb from "../components/BreadCrumb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const cartData = {
     items: [
         {
@@ -38,6 +38,10 @@ const cartData = {
 
 
 const ViewCart = () => {
+    const navigate = useNavigate()
+    const handleNavigate = () => {
+        navigate("/order")
+    }
     const calculatedSubtotal = cartData.items.reduce(
         (sum, item) => sum + item.price * item.quantity,
         0
@@ -245,7 +249,7 @@ const ViewCart = () => {
                             </button>
                         </div>
 
-                        <button className="mt-6 w-full cursor-pointer bg-black text-white py-3 rounded">
+                        <button onClick={handleNavigate} className="mt-6 w-full cursor-pointer bg-black text-white py-3 rounded">
                             Proceed to Checkout
                         </button>
                     </div>

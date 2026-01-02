@@ -1,5 +1,5 @@
 import { ShoppingCart, X, Menu, LogIn, LogOut } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import CartSidebar from "./CartSidebar";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +12,8 @@ const Navbar = () => {
   const menuItems = ["Men", "Women", "Party", "Mitr"];
   const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
-  const navigate=useNavigate()
+  const navigate = useNavigate()
+  const loaction=useLocation()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
 
@@ -23,7 +24,7 @@ const Navbar = () => {
 
   return (
     <>
-    <header className="bg-white shadow fixed top-0 left-0 w-full z-50">
+      <header className={loaction.pathname.includes("admin") ? "hidden" :"bg-white shadow fixed top-0 left-0 w-full z-50"}>
       <div className="container mx-auto flex items-center justify-between py-4 relative">
 
           <div className="flex-1 flex items-center gap-3">

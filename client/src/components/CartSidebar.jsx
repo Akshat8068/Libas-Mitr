@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const cartData = {
     items: [
@@ -35,10 +35,13 @@ const cartData = {
 };
 
 const CartSidebar = ({ isOpen, setIsOpen }) => {
-    
+    const navigate=useNavigate()
     const { items, subtotal, discount } = cartData;
     const grandTotal = subtotal - discount;
     if (!isOpen) return null;
+    const handleViewcart = () => {
+         navigate("/cart")
+     }
     
 
     return (
@@ -110,7 +113,7 @@ const CartSidebar = ({ isOpen, setIsOpen }) => {
                 </div>
 
                 <div className="flex w-full gap-3 mt-4">
-                    <button className="flex-1 h-11 border border-gray-300 text-gray-800 text-sm font-semibold tracking-wide uppercase rounded-none hover:bg-gray-900 hover:text-white transition">
+                    <button onClick={handleViewcart}  className="flex-1 h-11 border border-gray-300 text-gray-800 text-sm font-semibold tracking-wide uppercase rounded-none hover:bg-gray-900 hover:text-white transition">
                         View Cart
                     </button>
                     <button className="flex-1 h-11 border border-gray-300 text-gray-800 text-sm font-semibold tracking-wide uppercase rounded-none hover:bg-gray-900 hover:text-white transition">

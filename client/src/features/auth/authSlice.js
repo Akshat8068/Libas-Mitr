@@ -6,7 +6,7 @@ const userExist = JSON.parse(localStorage.getItem("user"))
 const authSlice = createSlice({
     name: "auth",
     initialState: {
-        user: userExist|| null,
+        user: userExist || null,
         isLoading: false,
         isSuccess: false,
         isError: false,
@@ -53,8 +53,8 @@ const authSlice = createSlice({
                 state.isLoading = false
                 state.isSuccess = false
                 state.isError = false
-                state.message=""
-                state.user=null
+                state.message = ""
+                state.user = null
             })
     }
 })
@@ -83,9 +83,9 @@ export const loginUser = createAsyncThunk("AUTH/LOGIN", async (formData, thunkAP
 
 // Logout user
 export const logoutUser = createAsyncThunk("AUTH/LOGOUT", async () => {
-    
-        localStorage.removeItem('user')
-    
+
+    localStorage.removeItem('user')
+
 })
 
 
