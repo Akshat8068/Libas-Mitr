@@ -1,8 +1,37 @@
 // src/pages/Users.tsx
+import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../../components/Layout';
-import { Eye, Ban } from 'lucide-react';
+import { Eye, Ban, Loader, Check } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { getAllUsers, updateUser } from '../../features/admin/adminSlice';
+import { toast } from 'react-toastify';
 
-const AdminUsers=()=> {
+const AdminUsers = () => {
+    const { user } = useSelector(state => state.auth)
+    const { adminIsLoading, adminIsSuccess, adminIsError, adminErrorMessage, allUsers} = useSelector(state => state.admin)
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const handleUpdateUser = (status) => {
+        dispatch(updateUser(status))
+    }
+    useEffect(() => {
+        if (!user) return
+        if (!user.isAdmin) {
+            navigate("/admin")
+        }
+        dispatch(getAllUsers())
+        if (adminIsError && adminErrorMessage) {
+            toast.error(adminErrorMessage, { position: 'top-center' })
+        }
+    }, [user, adminErrorMessage, adminIsError])
+    if (adminIsLoading) {
+        return (
+            <Loader loadingMessage={"Users Loading...."} />
+        )
+    }
     return (
         <Layout activeMenu="users" pageTitle="Users">
             <div className="bg-white rounded-xl shadow-md border border-gray-200">
@@ -23,187 +52,41 @@ const AdminUsers=()=> {
                                 <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">User ID</th>
                                 <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Name</th>
                                 <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Email</th>
-                                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Role</th>
+                                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Phone</th>
                                 <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
                                 <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm text-gray-900">#USR-1001</td>
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">Sarah Johnson</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">sarah.j@email.com</td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-violet-100 text-violet-800">Customer</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-2">
-                                        <button className="p-2 text-violet-600 hover:bg-violet-50 rounded-lg transition-colors">
-                                            <Eye className="w-4 h-4" />
-                                        </button>
-                                        <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                            <Ban className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm text-gray-900">#USR-1002</td>
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">Michael Chen</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">m.chen@email.com</td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-violet-100 text-violet-800">Customer</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-2">
-                                        <button className="p-2 text-violet-600 hover:bg-violet-50 rounded-lg transition-colors">
-                                            <Eye className="w-4 h-4" />
-                                        </button>
-                                        <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                            <Ban className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm text-gray-900">#USR-1003</td>
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">Emily Rodriguez</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">emily.r@email.com</td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-violet-100 text-violet-800">Customer</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-2">
-                                        <button className="p-2 text-violet-600 hover:bg-violet-50 rounded-lg transition-colors">
-                                            <Eye className="w-4 h-4" />
-                                        </button>
-                                        <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                            <Ban className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm text-gray-900">#USR-1004</td>
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">David Kim</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">david.kim@email.com</td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">Admin</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-2">
-                                        <button className="p-2 text-violet-600 hover:bg-violet-50 rounded-lg transition-colors">
-                                            <Eye className="w-4 h-4" />
-                                        </button>
-                                        <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                            <Ban className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm text-gray-900">#USR-1005</td>
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">Anna Thompson</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">anna.t@email.com</td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-violet-100 text-violet-800">Customer</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Blocked</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-2">
-                                        <button className="p-2 text-violet-600 hover:bg-violet-50 rounded-lg transition-colors">
-                                            <Eye className="w-4 h-4" />
-                                        </button>
-                                        <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                            <Ban className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm text-gray-900">#USR-1006</td>
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">James Wilson</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">james.w@email.com</td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-violet-100 text-violet-800">Customer</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-2">
-                                        <button className="p-2 text-violet-600 hover:bg-violet-50 rounded-lg transition-colors">
-                                            <Eye className="w-4 h-4" />
-                                        </button>
-                                        <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                            <Ban className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm text-gray-900">#USR-1007</td>
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">Lisa Martinez</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">lisa.m@email.com</td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-violet-100 text-violet-800">Customer</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-2">
-                                        <button className="p-2 text-violet-600 hover:bg-violet-50 rounded-lg transition-colors">
-                                            <Eye className="w-4 h-4" />
-                                        </button>
-                                        <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                            <Ban className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm text-gray-900">#USR-1008</td>
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">Robert Anderson</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">robert.a@email.com</td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-violet-100 text-violet-800">Customer</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-2">
-                                        <button className="p-2 text-violet-600 hover:bg-violet-50 rounded-lg transition-colors">
-                                            <Eye className="w-4 h-4" />
-                                        </button>
-                                        <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                            <Ban className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                            {allUsers.map(user=>{
+                                return (
+                                    <tr key={user._id} className="hover:bg-gray-50 transition-colors">
+                                        <td className="px-6 py-4 text-sm text-gray-900">#{user._id}</td>
+                                        <td className="px-6 py-4 text-sm font-medium text-gray-900">{user.name}</td>
+                                        <td className="px-6 py-4 text-sm text-gray-600">{user.email}</td>
+                                        <td className="px-6 py-4">
+                                            <span className="px-3 py-1 text-xs font-semibold rounded-full bg-violet-100 text-violet-800">{user.phone}</span>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <span className={user.isActive ? "px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800" :"px-3 py-1 text-xs font-semibold rounded-full bg-red-500 text-white"}>{user.isActive ? "Active" : "Inactive"}</span>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center gap-2">
+                                                
+                                                {user.isActive ? (
+                                                    <button onClick={() => handleUpdateUser({ userId: user._id,isActive:false})} className=" cursor-pointer p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                                                        <Ban className="w-4 h-4" />
+                                                    </button>
+                                                ) : (
+                                                        <button onClick={()=>handleUpdateUser({userId:user._id,isActive:true})} className=" cursor-pointer p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors">
+                                                            <Check className="w-4 h-4" />
+                                                        </button>
+                                                )}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </table>
                 </div>

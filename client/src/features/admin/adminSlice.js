@@ -55,6 +55,26 @@ const adminSlice = createSlice({
         state.adminIsError = true
         state.adminErrorMessage = action.payload
       })
+      .addCase(updateUser.pending, (state, action) => {
+        state.adminIsLoading = true
+        state.adminIsSuccess = false
+        state.adminIsError = false
+        state.adminErrorMessage = ""
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.adminIsLoading = false
+        state.adminIsSuccess = true
+        state.allUsers = state.allUsers.map(user=>user._id===action.payload._id?action.payload:user)
+        state.adminIsError = false
+        state.adminErrorMessage = ""
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.adminIsLoading = false
+        state.adminIsSuccess = false
+        state.adminIsError = true
+        state.adminErrorMessage = action.payload
+      })
+      
   }
 });
 
@@ -82,6 +102,19 @@ export const getAllOrders = createAsyncThunk("FETCH/ORDERS", async (_, thunkAPI)
 
   try {
     return await adminService.fetchAllOrders(token)
+
+  } catch (error) {
+    let message = error.response.data.message
+    return thunkAPI.rejectWithValue(message)
+
+  }
+})
+// Update All Users
+export const updateUser = createAsyncThunk("FETCH/UPDATEUSER", async (userData , thunkAPI) => {
+  let token = thunkAPI.getState().auth.user.token
+
+  try {
+    return await adminService.userUpdate(userData,token)
 
   } catch (error) {
     let message = error.response.data.message

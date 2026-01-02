@@ -8,6 +8,8 @@ const router = express.Router()
 // Get All users
 
 router.get("/users", protect.forAdmin, adminController.getAllUsers)
+router.put("/users/:uid", protect.forAdmin, adminController.updateUser)
+
 
 
 // Add all products

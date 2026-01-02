@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 function Layout({ children, activeMenu, pageTitle }) {
 
     const menuItems = [
-        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+        { id: '', label: 'Dashboard', icon: LayoutDashboard },
         { id: 'users', label: 'Users', icon: Users },
         { id: 'products', label: 'Products', icon: Package },
         { id: 'reviews', label: 'Reviews', icon: Star },

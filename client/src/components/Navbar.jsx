@@ -21,6 +21,7 @@ const Navbar = () => {
     navigate("/")
     dispatch(logoutUser())
   }
+  
 
   return (
     <>
@@ -29,26 +30,33 @@ const Navbar = () => {
 
           <div className="flex-1 flex items-center gap-3">
 
-            {/* Avatar */}
-            <div className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden cursor-pointer">
-              {user?.avatar ? (
-                <img
-                  src={user.avatar}
-                  alt="profile"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <span className="font-semibold text-gray-700">
-                  {user?.name?.charAt(0).toUpperCase()}
-                </span>
-              )}
-            </div>
+            {user?.isAdmin ? (
+              <>
+                {/* Avatar */}
+                <div className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden cursor-pointer">
+                    
+                    <Link to={"/admin"} className="font-semibold text-gray-700">
+                      {user?.name?.charAt(0).toUpperCase()}
+                    </Link>
+                  
+                </div>
 
-            {/* Logo */}
-            <Link to="/" className="text-3xl font-bold logo-text">
-              LibasMitr
-            </Link>
+                {/* Logo */}
+                <Link to="/" className="text-3xl font-bold logo-text">
+                  LibasMitr
+                </Link>
+              </>
+            ) : (
+              <>
+                {/* Logo only (no avatar) */}
+                <Link to="/" className="text-3xl font-bold logo-text">
+                  LibasMitr
+                </Link>
+              </>
+            )}
+
           </div>
+
 
 
         {/* Desktop Menu (center) */}
