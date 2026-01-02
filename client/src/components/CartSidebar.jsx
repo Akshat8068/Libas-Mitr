@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const cartData = {
     items: [
@@ -34,12 +34,12 @@ const cartData = {
     discount: 20,
 };
 
-const CartSidebar = () => {
-    const [isOpen, setIsOpen] = useState(true); // sidebar initially open
+const CartSidebar = ({ isOpen, setIsOpen }) => {
+    
     const { items, subtotal, discount } = cartData;
     const grandTotal = subtotal - discount;
-
-    if (!isOpen) return null; // agar close hua to kuch render na ho
+    if (!isOpen) return null;
+    
 
     return (
         <aside className="fixed top-0 right-0 w-full sm:w-[420px] h-screen bg-white shadow-2xl z-50 flex flex-col">
@@ -48,9 +48,8 @@ const CartSidebar = () => {
             <div className="flex items-center justify-between px-6 py-4 border-b">
                 <h2 className="text-xl font-bold tracking-wide">Your Cart</h2>
 
-                <button
+                <button onClick={() => setIsOpen(false)}
                     className="text-gray-500 hover:text-black text-2xl leading-none cursor-pointer"
-                    onClick={() => setIsOpen(false)} // close sidebar on click
                 >
                     ×
                 </button>
@@ -81,7 +80,13 @@ const CartSidebar = () => {
 
                             {/* Details */}
                             <div className="flex flex-col justify-evenly">
-                                <a className="font-medium hover:text-red-500 transition">{item.name}</a>
+                                <Link
+                                    to={`/products/${item.id}`}
+                                    className="font-medium hover:text-red-500 transition cursor-pointer"
+                                >
+                                    {item.name}
+                                </Link>
+
 
                                 <div className="flex items-center gap-3 text-sm text-gray-600">
                                     {item.size && <span className="text-gray-800 py-1 px-2 border border-gray-500 rounded-sm font-medium">{item.size}</span>}

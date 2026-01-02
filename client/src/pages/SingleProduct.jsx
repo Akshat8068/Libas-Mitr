@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { ChevronRight} from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import BreadCrumb from "../components/BreadCrumb";
 import bg1 from "../assets/product-detail-01.jpg";
 import bg2 from "../assets/product-detail-02.jpg";
 import bg3 from "../assets/product-detail-03.jpg";
@@ -19,18 +20,10 @@ const SingleProduct=()=> {
     const [activeImg, setActiveImg] = useState(images[0]);
 
     return (
-        <section className="bg-white py-6">
+        <section className="bg-white py-35 lg:pt-20">
 
             {/* ---------- BREADCRUMB ---------- */}
-            <div className="max-w-6xl mx-auto px-4 mb-6">
-                <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
-                    <a href="/" className="hover:text-gray-900 transition">Home</a>
-                    <ChevronRight className="w-4 h-4 text-gray-400" />
-                    <a href="/products" className="hover:text-gray-900 transition">Men</a>
-                    <ChevronRight className="w-4 h-4 text-gray-400" />
-                    <span className="text-gray-900">Lightweight Jacket</span>
-                </div>
-            </div>
+            <BreadCrumb/>
 
             <div className="max-w-6xl mx-auto px-4">
                 <div className="grid lg:grid-cols-2 gap-10">

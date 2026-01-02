@@ -9,9 +9,8 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import UserAllProducts from './pages/UserAllProducts';
 import SingleProduct from './pages/SingleProduct';
-
-
-
+import ViewCart from './pages/ViewCart';
+import PlaceOrder from './pages/PlaceOrder';
 const App = () => {
   return (
     <Router>
@@ -26,9 +25,13 @@ const App = () => {
         {/* User Products Page*/}
         <Route path="/products" element={<UserAllProducts />} />
         <Route path="/products/:pid" element={<SingleProduct />} />
+        {/* Cart Route */}
+        <Route path='/cart' element={<ViewCart />} />
+        <Route path='/order' element={<PlaceOrder/>}/>
       </Routes>
     
       <ToastContainer />
+      
       <Footer />
     </Router>
   );

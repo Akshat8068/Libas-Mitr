@@ -1,12 +1,12 @@
 import { Mail, User, Phone, MapPin } from "lucide-react";
-import SignImgText from "../components/Sign/SignImgText";
-import SectionHeader from "../components/Sign/SectionHeader";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { registerUser } from "../features/auth/authSlice";
-
+import SignImgText from "../components/Sign/SignImgText";
+import SectionHeader from "../components/Sign/SectionHeader";
+import Loader from "../components/Loader";
 const Register = () => {
 
     const{user,isLoading,isError,message}=useSelector(state=>state.auth)
@@ -47,7 +47,7 @@ const Register = () => {
     
     if (isLoading) {
         return (
-            <h1 className="text-center text-2xl font-semibold">Loading....</h1>
+            <Loader loadingMessage={"Authanciting"}/>
         )
     }
     return (

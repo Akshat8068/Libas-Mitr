@@ -1,5 +1,6 @@
 import React from "react";
-
+import BreadCrumb from "../components/BreadCrumb";
+import { Link } from "react-router-dom";
 const cartData = {
     items: [
         {
@@ -34,9 +35,9 @@ const cartData = {
     discount: 20,
 };
 
-export default function ViewCart() {
 
-    
+
+const ViewCart = () => {
     const calculatedSubtotal = cartData.items.reduce(
         (sum, item) => sum + item.price * item.quantity,
         0
@@ -46,159 +47,205 @@ export default function ViewCart() {
     const taxableAmount = calculatedSubtotal - cartData.discount + shipping;
     const tax = taxableAmount * 0.1;
     const finalTotal = taxableAmount + tax;
-
-
     const total = calculatedSubtotal - cartData.discount;
 
     return (
-        <div className=" min-h-screen">
+        <div className="min-h-screen lg:pt-20">
             {/* BREADCRUMB */}
-            <div className="max-w-6xl mx-auto px-4 py-6">
-                <div className="flex items-center gap-2 text-sm">
-                    <a href="/" className="text-gray-500 hover:text-gray-900">
-                        Home
-                    </a>
-                    <span className="text-gray-400">/</span>
-                    <span className="text-gray-900 font-medium">Shopping Cart</span>
-                </div>
-            </div>
+            <BreadCrumb />
+
             {/* CONTINUE SHOPPING */}
             <div className="max-w-6xl mx-auto px-4 mb-4 flex justify-between items-center">
                 <a
                     href="/shop"
-                    className="inline-flex items-center gap-2 text-gray-700  transition
-                    px-4 py-2 border border-gray-200
-                                     bg-gray-200 rounded-full hover:bg-white
-                                      hover:border-gray-400"
+                    className="inline-flex items-center gap-2 text-gray-700 px-4 py-2
+          border border-gray-200 bg-gray-200 rounded-full hover:bg-white hover:border-gray-400"
                 >
                     ← Continue Shopping
                 </a>
             </div>
 
-            {/* CART */}
             <form className="max-w-6xl mx-auto px-4 pb-16">
-                <div className="flex space-x-6  justify-around h-full">
-                    {/* LEFT — TABLE */}
-                    <div><div className="xl:col-span-2 border-l border-gray-300 border-r border-t   overflow-hidden">
-                        <table className="w-full text-left">
-                            <thead>
-                                <tr>
-                                    <th className="p-4 font-semibold">Product</th>
-                                    <th className="p-4 font-semibold">Price</th>
-                                    <th className="p-4 font-semibold">Quantity</th>
-                                    <th className="p-4 font-semibold">Total</th>
-                                    <th className="p-4 font-semibold">X</th> {/* Remove column */}
-                                </tr>
-                            </thead>
+                {/* GRID LAYOUT */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
+                    {/* ---------------- LEFT SIDE ---------------- */}
+                    <div className="lg:col-span-2 space-y-4">
 
-                            <tbody>
-                                {cartData.items.map((item) => (
-                                    <tr key={item.id} className="border border-gray-300 border-t">
-                                        <td className="p-4">
-                                            <div className="flex gap-4">
-                                                <img
-                                                    src={item.img}
-                                                    alt={item.name}
-                                                    className="w-20 h-20 object-cover rounded"
-                                                />
-                                                <div>
-                                                    <p className="font-medium">{item.name}</p>
-                                                    <div className="flex items-center gap-3 mt-1 text-sm text-gray-600">
-                                                        <span>Size: {item.size}</span>
-                                                        <span className="flex items-center gap-1">
-                                                            Color:
-                                                            <span
-                                                                className="w-3 h-3 rounded-full border"
-                                                                style={{ backgroundColor: item.color }}
-                                                            />
-                                                        </span>
+                        {/* -------- TABLE (Desktop only) -------- */}
+                        <div className="hidden lg:block border border-gray-300 overflow-hidden">
+                            <table className="w-full text-left">
+                                <thead>
+                                    <tr>
+                                        <th className="p-4 font-semibold">Product</th>
+                                        <th className="p-4 font-semibold">Price</th>
+                                        <th className="p-4 font-semibold">Quantity</th>
+                                        <th className="p-4 font-semibold">Total</th>
+                                        <th className="p-4 font-semibold">X</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {cartData.items.map(item => (
+                                        <tr key={item.id} className="border-t">
+                                            <td className="p-4">
+                                                <div className="flex gap-4">
+                                                    <Link to={`/products/${item.id}`}>
+                                                        <img src={item.img} className="w-20 h-20 rounded object-cover" />
+                                                    </Link>
+                                                    <div>
+                                                        <Link
+                                                            to={`/products/${item.id}`}
+                                                            className="font-semibold  hover:underline cursor-pointer"
+                                                        >
+                                                            {item.name}
+                                                        </Link>
+                                                        <div className="text-sm text-gray-600 flex gap-3 mt-1">
+                                                            <span>Size: {item.size}</span>
+                                                            <span className="flex gap-1 items-center">
+                                                                Color:
+                                                                <span
+                                                                    className="w-3 h-3 rounded-full border"
+                                                                    style={{ backgroundColor: item.color }}
+                                                                />
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                            </td>
+
+                                            <td className="p-4">${item.price}</td>
+
+                                            <td className="p-4">
+                                                <div className="flex gap-2 items-center">
+                                                    <button className="px-3 py-1 border rounded">−</button>
+                                                    <input
+                                                        readOnly
+                                                        value={item.quantity}
+                                                        className="w-10 text-center border rounded"
+                                                    />
+                                                    <button className="px-3 py-1 border rounded">+</button>
+                                                </div>
+                                            </td>
+
+                                            <td className="p-4 font-semibold">
+                                                ${item.price * item.quantity}
+                                            </td>
+
+                                            <td className="p-4">
+                                                <button className="text-red-500 font-bold">X</button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {/* -------- CARD VIEW (Mobile + Tablet) -------- */}
+                        <div className="space-y-4 lg:hidden">
+                            {cartData.items.map(item => (
+                                <div
+                                    key={item.id}
+                                    className="border rounded-lg p-4 bg-white shadow-sm"
+                                >
+                                    <div className="flex gap-4">
+                                        <Link to={`/products/${item.id}`}>
+                                            <img src={item.img} className="w-20 cursor-pointer h-20 rounded object-cover" />
+                                        </Link>
+
+                                        <div className="flex-1">
+                                            <Link
+                                                to={`/products/${item.id}`}
+                                                className="font-semibold cursor-pointer hover:underline cursor-pointer"
+                                            >
+                                                {item.name}
+                                            </Link>
+
+                                            <div className="text-sm text-gray-600 flex gap-3 mt-1">
+                                                <span>Size: {item.size}</span>
+                                                <span className="flex gap-1 items-center">
+                                                    Color:
+                                                    <span
+                                                        className="w-3 h-3 rounded-full border"
+                                                        style={{ backgroundColor: item.color }}
+                                                    />
+                                                </span>
                                             </div>
-                                        </td>
 
-                                        <td className="p-4 font-medium">${item.price}</td>
+                                            <div className="flex justify-between items-center mt-3">
+                                                <span className="font-semibold">${item.price}</span>
 
-                                        <td className="p-4">
-                                            
-                                            <div className="flex items-center gap-2">
-                                                <button className="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100">−</button>
-                                                <input
-                                                    type="number"
-                                                    value={item.quantity}
-                                                    readOnly
-                                                    className="w-10 px-1 text-center border border-gray-300 rounded"
-                                                />
-                                                <button className="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100">+</button>
+                                                <div className="flex gap-2 items-center">
+                                                    <button className="px-3 py-1 border rounded">−</button>
+                                                    <input
+                                                        readOnly
+                                                        value={item.quantity}
+                                                        className="w-10 text-center border rounded"
+                                                    />
+                                                    <button className="px-3 py-1 border rounded">+</button>
+                                                </div>
                                             </div>
-                                        </td>
 
-                                        <td className="p-4 font-semibold">${item.price * item.quantity}</td>
+                                            <div className="flex justify-between mt-3">
+                                                <span className="text-gray-600">Total</span>
+                                                <span className="font-semibold">
+                                                    ${item.price * item.quantity}
+                                                </span>
+                                            </div>
 
-                                        <td className="p-4">
-                                            <button className="text-red-500 font-bold hover:text-red-700">X</button> {/* Remove button */}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
+                                            <button className="mt-3 text-red-500">Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
 
-                        </table>
+                    </div>
 
-
-                    </div></div>
-
-                    {/* RIGHT — TOTALS */}
-                    <div className="bg-white h-full border border-gray-200     p-6">
-                        
+                    {/* ---------------- RIGHT SIDE (TOTALS) ---------------- */}
+                    <div className="bg-white  p-6 rounded-lg  h-fit">
                         <h3 className="text-xl font-semibold mb-6">Cart Totals</h3>
 
-                        <div className="flex justify-between py-3 border-b border-gray-300">
-                            <span>Subtotal:</span>
-                            <span className="font-semibold">${calculatedSubtotal}</span>
-                        </div>
-
-                        <div className="flex justify-between py-3 border-b border-gray-300">
-                            <span>Discount:</span>
-                            <span className="font-semibold text-green-700">
-                                -${cartData.discount}
-                            </span>
-                        </div>
-                        <div className="flex justify-between py-3 border-b border-gray-300">
-                            <span>Shipping:</span>
-                            <span className="font-semibold">$15</span>
-                        </div>
-                        <div className="flex justify-between py-3 border-b border-gray-300">
-                            <span>Tax (10%):</span>
-                            <span className="font-semibold">${tax}</span>
-                        </div>
-                        <div className="flex justify-between py-4 border-t mb-1 border-gray-300">
-                            <span className="text-lg font-medium">Total:</span>
-                            <span className="text-lg font-semibold">${finalTotal.toFixed(2)}</span>
-                        </div>
-                        <div className="flex  items-center justify-center gap-4 p-6 border-t border-gray-300">
-                            <div className="flex flex-col gap-2">
-                                <input
-                                    type="text"
-                                    placeholder="Coupon Code"
-                                    className="border-gray-300 border  rounded-2xl px-4 py-2"
-                                />
-                                <button
-                                    type="button"
-                                    className="px-4 py-2 border border-gray-200
-                                     bg-gray-200 rounded-full hover:bg-white hover:border-gray-400"
-                                >
-                                    Apply Coupon
-                                </button>
+                        <div className="space-y-3 text-sm">
+                            <div className="flex justify-between">
+                                <span>Subtotal</span>
+                                <span className="font-semibold">${calculatedSubtotal}</span>
                             </div>
 
+                            <div className="flex justify-between">
+                                <span>Discount</span>
+                                <span className="text-green-700 font-semibold">
+                                    -${cartData.discount}
+                                </span>
+                            </div>
 
+                            <div className="flex justify-between">
+                                <span>Shipping</span>
+                                <span>$15</span>
+                            </div>
+
+                            <div className="flex justify-between">
+                                <span>Tax (10%)</span>
+                                <span>${tax.toFixed(2)}</span>
+                            </div>
+
+                            <div className="flex justify-between border-t pt-3 text-lg">
+                                <span>Total</span>
+                                <span className="font-semibold">${finalTotal.toFixed(2)}</span>
+                            </div>
                         </div>
-                        <div className="flex justify-between py-4  border-t mb-1 border-gray-300">
-                            <span className="text-lg font-medium">Total:</span>
-                            <span className="text-lg font-semibold">${total}</span>
+
+                        <div className="mt-6 flex gap-3">
+                            <input
+                                placeholder="Coupon Code"
+                                className="flex-1 border px-3 py-2 rounded-xl"
+                            />
+                            <button className="px-4 cursor-pointer py-2 border rounded-full bg-gray-200 hover:bg-white">
+                                Apply
+                            </button>
                         </div>
-                        <button className="w-full bg-gray-900 text-white py-3 rounded hover:bg-black transition">
+
+                        <button className="mt-6 w-full cursor-pointer bg-black text-white py-3 rounded">
                             Proceed to Checkout
                         </button>
                     </div>
@@ -206,4 +253,7 @@ export default function ViewCart() {
             </form>
         </div>
     );
-}
+};
+
+export default ViewCart;
+

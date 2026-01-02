@@ -1,9 +1,11 @@
 import { Eye, Mail } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SignImgText from "../components/Sign/SignImgText";
 import SectionHeader from "../components/Sign/SectionHeader";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const { user, isLoading, isSuccess, isError, message } = useSelector(state => state.auth)
@@ -17,7 +19,7 @@ const Login = () => {
     const navigate = useNavigate()
 
     const handleChange = (e) => {
-        e.preventDefault()
+        
         setfromData({
             ...formData
             [e.target.name] = e.target.value
@@ -25,7 +27,7 @@ const Login = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(lo)
+        dispatch(loginUser(formData))
     }
 
     useEffect(() => {

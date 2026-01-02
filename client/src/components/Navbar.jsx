@@ -1,23 +1,54 @@
 import { ShoppingCart, X, Menu, LogIn, LogOut } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import CartSidebar from "./CartSidebar";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../features/auth/authSlice";
+
+
+
 
 const Navbar = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const isLoggedIn = true; // change to true to test logged in
   const menuItems = ["Men", "Women", "Party", "Mitr"];
+  const { user } = useSelector(state => state.auth)
+  const dispatch = useDispatch()
+  const navigate=useNavigate()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+
+  const handleLogout = () => {
+    navigate("/")
+    dispatch(logoutUser())
+  }
 
   return (
+    <>
     <header className="bg-white shadow fixed top-0 left-0 w-full z-50">
       <div className="container mx-auto flex items-center justify-between py-4 relative">
 
-        {/* Logo */}
-        <div className="flex-1">
-          <Link to="/" className="text-3xl font-bold logo-text">
-            LibasMitr
-          </Link>
-        </div>
+          <div className="flex-1 flex items-center gap-3">
+
+            {/* Avatar */}
+            <div className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden cursor-pointer">
+              {user?.avatar ? (
+                <img
+                  src={user.avatar}
+                  alt="profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span className="font-semibold text-gray-700">
+                  {user?.name?.charAt(0).toUpperCase()}
+                </span>
+              )}
+            </div>
+
+            {/* Logo */}
+            <Link to="/" className="text-3xl font-bold logo-text">
+              LibasMitr
+            </Link>
+          </div>
+
 
         {/* Desktop Menu (center) */}
         <nav className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
@@ -53,20 +84,21 @@ const Navbar = () => {
           </div>
 
           {/* Cart */}
-          <button className="relative">
+          <button className="relative" onClick={() => setCartOpen(true)}>
             <ShoppingCart className="w-6 h-6" />
             <span className="absolute -top-3 left-3 text-xs text-gray-900 font-bold">0</span>
           </button>
 
           {/* Login / Logout (Desktop Only) */}
-          <div className="hidden md:flex">
-            <Link
-              to={isLoggedIn ? "/logout" : "/login"}
-              className="flex items-center gap-1 text-gray-900 hover:text-red-500 transition"
-            >
-              {isLoggedIn ? <LogOut className="w-5 h-5" /> : <LogIn className="w-5 h-5" />}
-              <span>{isLoggedIn ? "Logout" : "Login"}</span>
-            </Link>
+            <div className="hidden md:flex">
+              {user ? (<>
+                <button onClick={handleLogout} className="flex items-center gap-1 border  p-2 font-semibold bg-red-500  text-white hover:bg-red-700 ">Logout</button>
+              </>) : (<>
+                  <Link to={"./login"} className="flex items-center gap-1 border  p-2 font-semibold bg-black text-white hover:bg-gray-700 " >
+                    Login
+                  </Link>
+              </>)}
+           
           </div>
 
           {/* Mobile Hamburger */}
@@ -112,19 +144,22 @@ const Navbar = () => {
           </ul>
 
           {/* Login / Logout (Mobile Only) */}
-          <div className="mt-auto px-6 pb-6">
-            <Link
-              to={isLoggedIn ? "/logout" : "/login"}
-              className="flex items-center justify-center gap-2 text-lg font-medium text-white bg-black rounded py-2"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {isLoggedIn ? <LogOut className="w-5 h-5" /> : <LogIn className="w-5 h-5" />}
-              <span>{isLoggedIn ? "Logout" : "Login"}</span>
-            </Link>
+            <div className="mt-auto px-6 pb-6">
+              {user ? (<>
+                <button onClick={() => {  handleLogout(); setMobileMenuOpen(false);}} className="flex w-full items-center gap-1 border  p-2  bg-red-500  text-white hover:bg-red-700  justify-center  text-lg font-medium   rounded py-2 ">Logout</button>
+              </>) : (<>
+                  <Link to={"./login"} onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-1 border w-full  p-2 justify-center font-medium text-lg bg-black text-white hover:bg-gray-700 " >
+                  Login
+                </Link>
+              </>)}
+           
           </div>
         </div>
       )}
     </header>
+    <CartSidebar isOpen={cartOpen} setIsOpen={setCartOpen} />
+     </>
+
   );
 };
 
