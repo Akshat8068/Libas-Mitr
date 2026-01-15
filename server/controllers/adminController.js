@@ -24,64 +24,173 @@ const updateUser = async (req, res) => {
     }
     res.status(201).json(updatedUser)
 }
+const getAdminProduct = async (req, res) => {
+    let product = await Product.findById(req.params.pid)
+    if (!product) {
+        res.status(404)
+        throw new Error("No Product Found");
+
+    } else {
+        res.status(200).json(product)
+    }
+}
 const addProducts = async (req, res) => {
-
-
     try {
-        const { name, description, category, originalPrice, salePrice, stock, size } = req.body
-        console.log(req.body)
-        if (!name || !description || !category || !originalPrice || !salePrice || !stock || !size) {
-            res.status(409)
-            throw new Error("Please Fill all detils");
 
+        // Parse JSON strings from multipart form data
+        const {name ,description,brand ,originalPrice ,salePrice }=req.body
+        const categories = req.body.categories ? JSON.parse(req.body.categories) : null;
+        const colors = req.body.colors ? JSON.parse(req.body.colors) : null;
+        
+        if (!name || !description ||!brand || !categories || !originalPrice || !salePrice || !colors) {
+             res.status(409).json({
+                message: "Please fill all details including colors!",
+                // received: { name, description,brand, categories, originalPrice, salePrice, colors }
+            });
         }
 
-        // Upload to cloudinary
+        const processedColors = [];
 
-        let imagePath = await uploaderToCloudinary(req.file.path)
+        for (let i = 0; i < colors.length; i++) {
+            const color = colors[i];
 
-        // remove from our server 
-        fs.unlinkSync(req.file.path)
+            // Upload mainImage if provided
+            let mainImagePath = "";
+            if (req.files?.[`mainImage_${i}`]?.[0]) {
+                const uploadResult = await uploaderToCloudinary(req.files[`mainImage_${i}`][0].path);
+                mainImagePath = uploadResult.secure_url;
+            }
+            console.log("MainImage:", mainImagePath);
+
+            // Upload catalog/sample images
+            const imagesArray = [];
+            if (req.files?.[`images_${i}`]) {
+                for (let img of req.files[`images_${i}`]) {
+                    const uploadResult = await uploaderToCloudinary(img.path);
+                    imagesArray.push(uploadResult.secure_url);
+                }
+            }
+            console.log("Images:", imagesArray);
+
+            processedColors.push({
+                colorName: color.colorName,
+                mainImage: mainImagePath,
+                images: imagesArray,
+                sizes: color.sizes, // array of { size, stock }
+            });
+        }
+        console.log("ProcessedColors:", processedColors);
+
         const product = await Product.create({
             name,
             description,
-            originalPrice,
-            salePrice,
-            category,
-            stock,
-            size,
-            image: imagePath.secure_url
+            brand,
+            categories,
+            originalPrice: Number(originalPrice),
+            salePrice: Number(salePrice),
+            colors: processedColors,
+        });
 
-        })
-
-        if (!product) {
-            res.status(409)
-            throw new Error("Product Not created");
-        } else {
-            res.status(201).json(product)
-        }
+        console.log("Created product:", product);
+        res.status(201).json(product);
     } catch (error) {
-        fs.unlinkSync(req?.file?.path)
-        res.status(500)
-        throw new Error("Product not created");
-
-
+        console.log("Error:", error);
+        res.status(500).json({ message: "Product not created", error: error.message });
     }
 }
 const updateProducts = async (req, res) => {
-    let product = await Product.findById(req.params.pid)
+    try {
+        console.log("Raw req.body:", req.body);
+        console.log("Files:", req.files);
 
-    if (!product) {
-        res.status(404)
-        throw new Error("Product not found");
-    }
+        // Find existing product
+        const product = await Product.findById(req.params.pid);
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
 
-    const updateProduct = await Product.findByIdAndUpdate(req.params.pid, req.body, { new: true })
-    if (!updateProduct) {
-        res.status(404)
-        throw new Error("Product not Updated");
-    } else {
-        res.status(201).json(updateProduct)
+        // Parse JSON strings from multipart form data
+        const { name, description, originalPrice, salePrice,brand } = req.body;
+        const categories = req.body.categories ? JSON.parse(req.body.categories) : null;
+        const colors = req.body.colors ? JSON.parse(req.body.colors) : null;
+
+        console.log("Parsed data:", { name, description, categories, originalPrice,brand, salePrice, colors });
+
+        // Prepare update object with basic fields
+        const updateData = {};
+
+        if (name) updateData.name = name;
+        if (brand) updateData.brand=brand
+        if (description) updateData.description = description;
+        if (categories) updateData.categories = categories;
+        if (originalPrice) updateData.originalPrice = Number(originalPrice);
+        if (salePrice) updateData.salePrice = Number(salePrice);
+
+        // Process colors if provided
+        if (colors && colors.length > 0) {
+            const processedColors = [];
+
+            for (let i = 0; i < colors.length; i++) {
+                const color = colors[i];
+
+                // Find matching existing color by colorName or index
+                const existingColor = product.colors.find(c => c.colorName === color.colorName)
+                    || product.colors[i]
+                    || {};
+
+                // Upload new mainImage if provided, otherwise keep existing
+                let mainImagePath = existingColor.mainImage || "";
+                if (req.files?.[`mainImage_${i}`]?.[0]) {
+                    const uploadResult = await uploaderToCloudinary(req.files[`mainImage_${i}`][0].path);
+                    fs.unlinkSync(req.files[`mainImage_${i}`][0].path);
+                    mainImagePath = uploadResult.secure_url;
+                }
+                console.log(`MainImage ${i}:`, mainImagePath);
+
+                // Upload new catalog images if provided, otherwise keep existing
+                let imagesArray = existingColor.images || [];
+                if (req.files?.[`images_${i}`]) {
+                    imagesArray = []; // Replace with new images
+                    for (let img of req.files[`images_${i}`]) {
+                        const uploadResult = await uploaderToCloudinary(img.path);
+                        fs.unlinkSync(img.path);
+                        imagesArray.push(uploadResult.secure_url);
+                    }
+                }
+                console.log(`Images ${i}:`, imagesArray);
+
+                processedColors.push({
+                    colorName: color.colorName,
+                    mainImage: mainImagePath,  // Keeps existing if no new file
+                    images: imagesArray,        // Keeps existing if no new files
+                    sizes: color.sizes,         // Updates sizes/stock
+                    _id: existingColor._id      // Preserves _id
+                });
+            }
+
+            updateData.colors = processedColors;
+            console.log("ProcessedColors:", processedColors);
+        }
+
+        console.log("Update data:", updateData);
+
+        // Update product
+        const updatedProduct = await Product.findByIdAndUpdate(
+            req.params.pid,
+            updateData,
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({ message: "Product not updated" });
+        }
+
+        console.log("Updated product:", updatedProduct);
+        res.status(200).json(updatedProduct);
+
+    } catch (error) {
+        console.log("Error:", error);
+        res.status(500).json({ message: "Product not updated", error: error.message });
     }
 }
 
@@ -95,11 +204,7 @@ const updateOrder = async (req, res) => {
         throw new Error("Order Not Found");
 
     }
-    if (myOrder.status === "dispatched") {
-        res.status(409)
-        throw new Error("Order already Dispatched");
-        
-    }
+   
     const updateStock = async (productId, updatedStock) => {
         await Product.findByIdAndUpdate(productId, { stock: updatedStock })
     }
@@ -114,10 +219,21 @@ const updateOrder = async (req, res) => {
 
         updatedOrder = await Order.findByIdAndUpdate(orderId, { status: "dispatched" }, { new: true }).populate("products.product").populate('coupon')
 
-    } else {
-        updatedOrder = await Order.findByIdAndUpdate(orderId, { status: status === "delivered" ? "delivered" : "cancelled" }, { new: true })
+    } else if (status === "delivered"){
+        updatedOrder = await Order.findByIdAndUpdate(orderId, { status: "delivered"  }, { new: true })
 
+    }
+    else {
+        if (myOrder.status === "dispatched") {
+        res.status(409)
+        throw new Error("Order already Dispatched");
+        
+    }
+        else {
+    updatedOrder = await Order.findByIdAndUpdate(orderId, { status:  "cancelled" }, { new: true })
 
+        }
+        
     }
     if (!updatedOrder) {
         res.status(409)
@@ -129,11 +245,13 @@ const updateOrder = async (req, res) => {
 }
 
 const getAllOrders = async (req, res) => {
-    let orders = await Order.find().populate("products")
-    if (!orders) {
-        res.status(200)
-        throw new Error("No Orders Found");
+    let orders = await Order.find()
+        .populate("products.product")
+        .populate("user")
 
+    if (!orders || orders.length === 0) {
+        res.status(404)
+        throw new Error("No Orders Found");
     } else {
         res.status(200).json(orders)
     }
@@ -193,7 +311,7 @@ const allCoupon = async (req, res) => {
 }
 
 
-const adminController = { getAllUsers, updateUser, addProducts, updateProducts, updateOrder, getAllOrders, getSingleOrder, getAllReview, createCoupon, allCoupon }
+const adminController = { getAllUsers, updateUser,getAdminProduct, addProducts, updateProducts, updateOrder, getAllOrders, getSingleOrder, getAllReview, createCoupon, allCoupon }
 
 
 export default adminController

@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import Loader from '../../components/Loader';
-import { getAllOrders, getAllUsers } from '../../features/admin/adminSlice';
+import { getAllOrders, getAllProducts, getAllUsers } from '../../features/admin/adminSlice';
 
-function Dashboard() {
+const Dashboard=()=> {
 
     const { user } = useSelector(state => state.auth)
     const { adminIsLoading, adminIsSuccess, adminIsError, adminErrorMessage, allProducts, allOrders, allUsers, allCoupons } = useSelector(state => state.admin)
@@ -20,16 +20,19 @@ function Dashboard() {
         if (!user) return
         if (!user.isAdmin) {
             navigate("/admin")
+        } else {
+            // fetch only once
+            dispatch(getAllUsers())
+            dispatch(getAllProducts())
+            dispatch(getAllOrders())
         }
-        dispatch(getAllUsers())
-        dispatch(getAllOrders())
+    }, [user, navigate, dispatch]) 
+
+    useEffect(() => {
         if (adminIsError && adminErrorMessage) {
-    toast.error(adminErrorMessage,{position:'top-center'})
-}
-
-       
-
-    }, [user,adminErrorMessage,adminIsError])
+            toast.error(adminErrorMessage, { position: 'top-center' })
+        }
+    }, [adminIsError, adminErrorMessage])
     if (adminIsLoading) {
         return (
             <Loader loadingMessage={"Admin Panel Loading...."} />

@@ -1,35 +1,41 @@
 import { v2 as cloudinary } from 'cloudinary';
-import fs from 'node:fs'
+import fs from 'node:fs';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Configuration
 cloudinary.config({
     cloud_name: 'dl77ftllk',
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
-})
-    
-    
+});
+
 const uploaderToCloudinary = async (fileLink) => {
-
-   
-
-    // Upload an image
-    const uploadResult = await cloudinary.uploader
-        .upload(
-            fileLink, {
-            resource_type:"auto"
-        }
-        )
-        .catch((error) => {
-            console.log(error);
-            // if failes remove from our server
-            fs.unlinkSync(fileLink)
+    try {
+        // Upload an image
+        const uploadResult = await cloudinary.uploader.upload(fileLink, {
+            resource_type: "auto"
         });
 
+        // Delete file from local server AFTER successful upload
+        if (fs.existsSync(fileLink)) {
+            fs.unlinkSync(fileLink);
+            console.log(`✓ Deleted local file: ${fileLink}`);
+        }
 
-    return uploadResult
+        return uploadResult;
 
-   
-}
+    } catch (error) {
+        console.log('Cloudinary upload error:', error);
 
-export default uploaderToCloudinary
+        // Delete file even if upload fails
+        if (fs.existsSync(fileLink)) {
+            fs.unlinkSync(fileLink);
+            console.log(`✓ Deleted failed upload file: ${fileLink}`);
+        }
+
+        throw error; // Re-throw to handle in controller
+    }
+};
+
+export default uploaderToCloudinary;

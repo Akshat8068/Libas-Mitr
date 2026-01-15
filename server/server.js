@@ -19,9 +19,9 @@ const PORT = process.env.PORT || 5000
 // connectDB
 connectDB()
 
-// Body Parsers
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Body Parsers - INCREASE LIMITS HERE
+app.use(express.json({ limit: '100mb' })); // Increased from default 100kb
+app.use(express.urlencoded({ limit: '100mb', extended: true }));
 
 app.get("/", (req, res) => {
     res.send("Hello LibasMitr Eskill")

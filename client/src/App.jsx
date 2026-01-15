@@ -11,10 +11,10 @@ import UserAllProducts from './pages/UserAllProducts';
 import SingleProduct from './pages/SingleProduct';
 import ViewCart from './pages/ViewCart';
 import PlaceOrder from './pages/PlaceOrder';
-import Layout from './components/Layout';
 import Dashboard from './pages/Admin/AdminDashboard';
 import AdminUsers from './pages/Admin/AdminUsers';
 import AdminProducts from './pages/Admin/AdminProducts';
+import AdminProductPage from './pages/Admin/AdminProductPage';
 import AdminCoupons from "./pages/Admin/AdminCoupons"
 import AdminOrders from "./pages/Admin/AdminOrders"
 import AdminReviews from "./pages/Admin/AdminReviews"
@@ -42,6 +42,7 @@ const App = () => {
 
         <Route path='/admin/users' element={<AdminUsers />} />
         <Route path='/admin/products' element={<AdminProducts />} />
+        <Route path='/admin/products/:pid' element={<AdminProductPage />} />
         <Route path='/admin/orders' element={<AdminOrders />} />
         <Route path='/admin/reviews' element={<AdminReviews />} />
         <Route path='/admin/coupons' element={<AdminCoupons />} />
@@ -51,7 +52,7 @@ const App = () => {
       </Routes>
 
       <ToastContainer />
-      <Layout />
+     
       <Footer />
     </Router>
   );

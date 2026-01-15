@@ -10,7 +10,7 @@ function Layout({ children, activeMenu, pageTitle }) {
         { id: 'users', label: 'Users', icon: Users },
         { id: 'products', label: 'Products', icon: Package },
         { id: 'reviews', label: 'Reviews', icon: Star },
-        { id: 'orders', label: 'Orders', icon: ShoppingCart },
+        { id: 'orders', label: 'Order', icon: ShoppingCart },
         { id: 'coupons', label: 'Coupons', icon: Tag },
     ];
 

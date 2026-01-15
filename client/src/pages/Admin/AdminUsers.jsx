@@ -18,7 +18,9 @@ const AdminUsers = () => {
         dispatch(updateUser(status))
     }
     useEffect(() => {
-        if (!user) return
+        if (!user) {
+            navigate("/")
+        }
         if (!user.isAdmin) {
             navigate("/admin")
         }

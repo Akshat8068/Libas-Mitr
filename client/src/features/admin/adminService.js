@@ -19,6 +19,15 @@ const fetchAllOrders = async (token) => {
     const response = await axios.get(API_URL + "/orders", options)
     return response.data
 }
+const fetchAllCoupons = async (token) => {
+    let options = {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + "/coupon", options)
+    return response.data
+}
 
 const userUpdate = async (userData, token) => {
     let options = {
@@ -27,9 +36,63 @@ const userUpdate = async (userData, token) => {
         }
     }
     const response = await axios.put(API_URL + "/users/" + userData.userId, userData, options)
+    return response.data
+}
+const addProduct = async (formData, token) => {
+    const options = {
+        headers: {
+            authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'  
+        }
+    }
+    const response = await axios.post(API_URL + "/product/add", formData, options)
+    return response.data
+}
+const updateProduct = async (formData,productID, token) => {
+    const options = {
+        headers: {
+            authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'  
+        }
+    }
+    const response = await axios.put(API_URL + "/product/"+ productID, formData, options)
     console.log(response.data)
     return response.data
 }
+const getProducts = async () => {
+    const response = await axios.get("/api/products")
+    return response.data
+}
 
-const adminService = { fetchAllUsers,fetchAllOrders,userUpdate }
+const getAdminSingleProduct = async (productId, token) => {
+    let options = {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + "/product/" + productId, options)
+    return response.data
+}
+
+const updateOrder = async (orderdetailes, token) => {
+    let options = {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.put(API_URL + "/order/" + orderdetailes.orderId, orderdetailes, options)
+    return response.data
+}
+
+const addCoupon = async (formData, token) => {
+    const options = {
+        headers: {
+            authorization: `Bearer ${token}`,
+        }
+    }
+    const response = await axios.post(API_URL + "/coupon/add", formData, options)
+    return response.data
+}
+
+const adminService = { fetchAllUsers,fetchAllOrders,fetchAllCoupons,userUpdate,getProducts, getAdminSingleProduct,addProduct,updateProduct,updateOrder,addCoupon}
 export default adminService

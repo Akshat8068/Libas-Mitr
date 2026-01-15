@@ -3,7 +3,7 @@ import Product from "../models/productModel.js"
 const getProducts = async (req, res) => {
     let products = await Product.find()
     if (!products) {
-        res.status(200)
+        res.status(404)
         throw new Error("No Products Found");
 
     } else {
@@ -13,7 +13,7 @@ const getProducts = async (req, res) => {
 const getProduct = async (req, res) => {
     let product = await Product.findById(req.params.pid)
     if (!product) {
-        res.status(200)
+        res.status(404)
         throw new Error("No Product Found");
 
     } else {

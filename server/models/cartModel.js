@@ -5,8 +5,8 @@ const cartSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
-        unique: true, // One cart per user
-        index: true   // Faster queries
+        unique: true,
+        index: true
     },
     products: [
         {
@@ -15,20 +15,32 @@ const cartSchema = new mongoose.Schema({
                 ref: "Product",
                 required: true
             },
+            colorName: {
+                type: String,
+                required: true
+            },
+            colorMainImage: {
+                type: String,
+                required: true
+            },
+            size: {
+                type: String,
+                required: true,
+                enum: ["S", "M", "L", "XL", "2XL", "3XL"]
+            },
             qty: {
                 type: Number,
                 required: true,
                 min: [1, "Quantity cannot be less than 1"],
                 default: 1
             },
-            _id: false // Prevents MongoDB from creating _id for subdocuments
+            _id: false
         }
     ]
 }, {
     timestamps: true
 });
 
-const Cart = mongoose.model("Cart", cartSchema)
+const Cart = mongoose.model("Cart", cartSchema);
 
-export default Cart
-
+export default Cart;

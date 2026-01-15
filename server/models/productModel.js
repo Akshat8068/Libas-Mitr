@@ -1,44 +1,49 @@
 import mongoose from "mongoose";
 
-const productSchema = new mongoose.Schema({
-    name: {
+// Schema for size + stock per color
+const sizeSchema = new mongoose.Schema({
+    size: {
         type: String,
-        required:true
-    },
-    description: {
-        type: String,
-        required: true
-    },
-    category: {
-        type: String,
-        required: true
-    },
-    originalPrice: {
-        type: Number,
-        required: true
-    },
-    salePrice: {
-        type: Number,
-        required: true
-    },
-    image: {
-        type: String,
+        enum: ["S", "M", "L", "XL", "2XL", "3XL"],
         required: true
     },
     stock: {
         type: Number,
         required: true,
-        default:0
-    },
-    size: {
-        type: String,
-        enum:["M","L","XL","2XL","3XL"],
-        required: true
+        default: 0
     }
-}, {
-    timestamps:true
-})
+});
 
-const Product = mongoose.model("Product", productSchema)
+// Schema for color + images + sizes
+const colorSchema = new mongoose.Schema({
+    colorName: { type: String, required: true },    // red, purple, navy etc.
+    mainImage: { type: String, default: "" },       // VTON image optional
+    images: [{ type: String }],                     // catalog / model / sample images
+    sizes: [sizeSchema]                             // per size stock
+});
 
-export default Product
+// Main Product Schema
+const productSchema = new mongoose.Schema(
+    {
+        name: { type: String, required: true },
+        description: { type: String, required: true },
+
+        // multi category
+        categories: [{ type: String, required: true }], // men, women, kids etc.
+        brand: {
+            type: String,
+            required:true
+},
+        originalPrice: { type: Number, required: true },
+        salePrice: { type: Number, required: true },
+
+        // colors array
+        colors: [colorSchema],
+
+        isActive: { type: Boolean, default: true }
+    },
+    { timestamps: true }
+);
+
+const Product = mongoose.model("Product", productSchema);
+export default Product;

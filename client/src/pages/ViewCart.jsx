@@ -7,7 +7,7 @@ const cartData = {
             id: 1,
             name: "Silk Embroidered Kurta Set",
             price: 120,
-            color: "red",
+            colorName: "red",
             size: "L",
             quantity: 1,
             img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCpC4Ie4NULmzPt32_aqJS2QQ2lLXUXpMdBr42eUkOSUHCHY82aswDbC0zmf5e0OK_NuaSrJCHf7d4AFGNReH4wg7pP_JBVLbyDHauwa6yT4AG1e1xkKjMbHZwQa4ULxCh8Ue8FOokvbkuApUZ-xggMw9znbU13B_oRrj5eYELxck39WwdnJBwjLJXt0SeRT4skLgDy3E3MnUyt4THjhIG43lc6MGDaWT-sOwIfG0V0kcwPa73_MYHLJHueuolYTHVbyS9I58WvQtAt",
@@ -110,7 +110,7 @@ const ViewCart = () => {
                                                                 Color:
                                                                 <span
                                                                     className="w-3 h-3 rounded-full border"
-                                                                    style={{ backgroundColor: item.color }}
+                                                                    style={{ backgroundColor: item.colorName }}
                                                                 />
                                                             </span>
                                                         </div>

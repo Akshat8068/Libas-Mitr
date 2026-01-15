@@ -2,23 +2,19 @@ import Cart from "../models/cartModel.js"
 import Coupan from "../models/couponModel.js"
 import Order from "../models/orderModel.js"
 import Product from "../models/productModel.js"
+
+
 const placeOrder = async (req, res) => {
     const userId = req.user._id
 
     const { shippingAddress } = req.body
-    
+
     if (!shippingAddress) {
         res.status(409)
         throw new Error("Please Enter Shipping Address");
-        
     }
+
     let couponCode = await Coupan.findOne({ couponCode: req.body?.coupon })
-
-    // if (!couponCode) {
-    //     res.status(404)
-    //     throw new Error("Inavalid Coupon");
-    // }
-
 
     const cart = await Cart.findOne({ user: userId })
         .populate('products.product');
@@ -28,34 +24,38 @@ const placeOrder = async (req, res) => {
         throw new Error("Cart not found")
     }
 
-    let totalBill = cart.products.reduce((acc, product) => {
-        return acc + product.product.salePrice * product.qty
+    let totalBill = cart.products.reduce((acc, item) => {
+        return acc + item.product.salePrice * item.qty
     }, 0)
 
     totalBill = couponCode ? totalBill - totalBill * couponCode.couponDiscount / 100 : totalBill
 
+    // Map cart products to order products with all necessary fields
+    const orderProducts = cart.products.map(item => ({
+        product: item.product._id,
+        colorName: item.colorName,
+        colorMainImage: item.colorMainImage,
+        size: item.size,
+        qty: item.qty
+    }));
 
-    const order = new Order(
-        {
-            user: userId,
-            products: cart.products,
-            TotalBillAmount: totalBill,
-            isDiscounted: couponCode ? true : false,
-            coupon: couponCode ? couponCode._id : null,
-            shippingAddress:shippingAddress
+    const order = new Order({
+        user: userId,
+        products: orderProducts,
+        TotalBillAmount: totalBill,
+        isDiscounted: couponCode ? true : false,
+        coupon: couponCode ? couponCode._id : null,
+        shippingAddress: shippingAddress
+    })
 
-        }
-    )
     await order.save()
 
-    
     if (!order) {
         res.status(409)
-        throw new Error("Order Not placedd");
-        
+        throw new Error("Order Not placed");
     }
-    res.status(201)
-    res.json(order)
+
+    res.status(201).json(order)
 }
 const cancelOrder = async (req, res) => {
     const orderId = req.params.oid
