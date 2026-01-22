@@ -1,6 +1,7 @@
 // src/components/Layout.tsx
 import { LayoutDashboard, Users, Package, Star, ShoppingCart, Tag, LogOut } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function Layout({ children, activeMenu, pageTitle }) {
@@ -13,7 +14,12 @@ function Layout({ children, activeMenu, pageTitle }) {
         { id: 'orders', label: 'Order', icon: ShoppingCart },
         { id: 'coupons', label: 'Coupons', icon: Tag },
     ];
-
+    const navigate = useNavigate()
+    const dispatch=useDispatch()
+ const handleLogout = () => {
+    navigate("/")
+    dispatch(logoutUser())
+  }
     return (
         <div className="min-h-screen bg-gray-50 flex">
             <aside className="w-64 bg-gray-900 text-white flex flex-col">
@@ -51,7 +57,7 @@ function Layout({ children, activeMenu, pageTitle }) {
                         <div className="w-10 h-10 rounded-full bg-violet-100 flex items-center justify-center">
                             <span className="text-violet-600 font-semibold">A</span>
                         </div>
-                        <button className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 transition-colors">
+                        <button onClick={handleLogout} className="cursor-pointer flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 transition-colors">
                             <LogOut className="w-4 h-4" />
                             <span>Logout</span>
                         </button>

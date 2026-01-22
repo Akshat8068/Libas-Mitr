@@ -28,6 +28,15 @@ const fetchAllCoupons = async (token) => {
     const response = await axios.get(API_URL + "/coupon", options)
     return response.data
 }
+const fetchAllReviews = async (token) => {
+    let options = {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + "/reviews", options)
+    return response.data
+}
 
 const userUpdate = async (userData, token) => {
     let options = {
@@ -42,7 +51,6 @@ const addProduct = async (formData, token) => {
     const options = {
         headers: {
             authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data'  
         }
     }
     const response = await axios.post(API_URL + "/product/add", formData, options)
@@ -52,11 +60,9 @@ const updateProduct = async (formData,productID, token) => {
     const options = {
         headers: {
             authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data'  
         }
     }
     const response = await axios.put(API_URL + "/product/"+ productID, formData, options)
-    console.log(response.data)
     return response.data
 }
 const getProducts = async () => {
@@ -94,5 +100,5 @@ const addCoupon = async (formData, token) => {
     return response.data
 }
 
-const adminService = { fetchAllUsers,fetchAllOrders,fetchAllCoupons,userUpdate,getProducts, getAdminSingleProduct,addProduct,updateProduct,updateOrder,addCoupon}
+const adminService = { fetchAllUsers,fetchAllOrders,fetchAllReviews,fetchAllCoupons,userUpdate,getProducts, getAdminSingleProduct,addProduct,updateProduct,updateOrder,addCoupon}
 export default adminService

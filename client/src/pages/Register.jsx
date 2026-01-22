@@ -38,13 +38,20 @@ const Register = () => {
 
     useEffect(() => {
         if (user) {
-            navigate("/")
+            if (user.isAdmin) {
+                toast.success('Welcome Admin!', { position: 'top-center' });
+                navigate('/admin/dashboard');
+            } else {
+                toast.success('Login successful!', { position: 'top-center' });
+                navigate('/');
+            }
         }
+
         if (isError && message) {
-            toast.error(message)
+            toast.error(message);
         }
-    }, [user, isError, message])
-    
+    }, [user, isError, message, navigate]);
+
     if (isLoading) {
         return (
             <Loader loadingMessage={"Authanciting"}/>

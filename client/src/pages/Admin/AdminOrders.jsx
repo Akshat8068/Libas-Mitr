@@ -19,10 +19,12 @@ const AdminOrders = () => {
     }
     useEffect(() => {
         if (!user) return
-        if (!user.isAdmin) {
+        if (!user?.isAdmin) {
             navigate("/admin")
         }
-        dispatch(getAllOrders())
+        if (user.isAdmin) {
+            dispatch(getAllOrders())
+        }
         
     }, [user])
     useEffect(() => {

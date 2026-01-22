@@ -12,6 +12,7 @@ import BrandsCarousel from "../components/Hero/BrandsCarousel";
 import CarouselCategory from "../components/Hero/CarouselCategory";
 import AIStylist from "../components/Hero/AIStylist";
 import NewArrivals from "../components/NewArrivals";
+import { Link } from "react-router-dom";
 const Hero = () => {
   const settings = {
     dots: true,
@@ -59,10 +60,12 @@ const Hero = () => {
                     A small river named Duden flows by their place and supplies
                     it with the necessary regelialia.
                   </p>
-
-                  <button className="mt-6 bg-black text-white px-6 py-3 font-semibold hover:bg-gray-800 transition">
-                    Discover Now
-                  </button>
+                  <Link to={"/products"}>
+                    <button className="mt-6 bg-black text-white px-6 py-3 font-semibold hover:bg-gray-800 transition">
+                      Discover Now
+                    </button>
+                  </Link>
+                 
                 </div>
               </div>
             </div>
@@ -97,10 +100,13 @@ const Hero = () => {
                     A small river named Duden flows by their place and supplies it
                     with the necessary regelialia.
                   </p>
-
-                  <button className="mt-6 bg-black text-white px-6 py-3 font-semibold hover:bg-gray-800 transition">
-                    Shop Now
-                  </button>
+                  <Link
+                    to={"/products"}>
+                    <button className="mt-6 bg-black text-white px-6 py-3 font-semibold hover:bg-gray-800 transition">
+                      Shop Now
+                    </button>
+                  </Link>
+                 
                 </div>
               </div>
             </div>

@@ -65,7 +65,6 @@ export const registerUser = createAsyncThunk("AUTH/REGISTER", async (formData, t
         return await authService.register(formData)
     } catch (error) {
         let message = error.response.data.message
-        console.log(error)
         return thunkAPI.rejectWithValue(message)
 
     }

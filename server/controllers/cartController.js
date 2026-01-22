@@ -162,9 +162,10 @@ const updateCart = async (req, res) => {
     res.status(200).json(cart);
 };
 
+// ✅ FIXED: Now removes only specific variant (product + color + size)
 const removeCart = async (req, res) => {
     const { productId } = req.params;
-    const { colorName, size } = req.query; // Pass as query params
+    const { colorName, size } = req.query; // Get from query params
     const userId = req.user._id;
 
     const cart = await Cart.findOne({ user: userId });
@@ -174,7 +175,7 @@ const removeCart = async (req, res) => {
         throw new Error("Cart not found");
     }
 
-    // Filter out the specific product variant
+    // Filter out the SPECIFIC product variant (product + color + size)
     cart.products = cart.products.filter(
         (item) => !(
             item.product.toString() === productId &&

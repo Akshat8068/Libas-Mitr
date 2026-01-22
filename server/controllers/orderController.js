@@ -54,13 +54,13 @@ const placeOrder = async (req, res) => {
         res.status(409)
         throw new Error("Order Not placed");
     }
-
+    await cart.deleteOne();
     res.status(201).json(order)
 }
 const cancelOrder = async (req, res) => {
     const orderId = req.params.oid
 
-    const myOrder = await Order.findById(orderId).populate('cart').populate('user')
+    const myOrder = await Order.findById(orderId).populate('products.product').populate('user')
 
     if (!myOrder) {
         res.status(404)

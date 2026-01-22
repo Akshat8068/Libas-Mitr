@@ -1,8 +1,39 @@
 // src/pages/Reviews.tsx
+import { toast } from 'react-toastify';
 import Layout from '../../components/Layout';
-import { Star, Trash2 } from 'lucide-react';
+import { Loader, Star, Trash2 } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { getAllReviews } from '../../features/admin/adminSlice';
+import { useEffect } from 'react';
 
-const AdminReviews=()=> {
+const AdminReviews = () => {
+    const { user } = useSelector(state => state.auth)
+    const { adminIsLoading, adminIsSuccess, adminIsError, adminErrorMessage, allReviews } = useSelector(state => state.admin)
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()    
+    useEffect(() => {
+        if (!user) {
+            navigate("/")
+        }
+        if (!user?.isAdmin) {
+            navigate("/admin")
+        }
+        if (user.isAdmin) {
+            dispatch(getAllReviews())
+        }
+    }, [user])
+    useEffect(() => { 
+        if (adminIsError && adminErrorMessage) {
+            toast.error(adminErrorMessage, { position: 'top-center' })
+        }
+    }, [adminErrorMessage, adminIsError])
+    if (adminIsLoading) {
+        return (
+            <Loader loadingMessage={"Users Loading...."} />
+        )
+    }
     return (
         <Layout activeMenu="reviews" pageTitle="Reviews">
             <div className="bg-white rounded-xl shadow-md border border-gray-200">
@@ -25,201 +56,29 @@ const AdminReviews=()=> {
                                 <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Rating</th>
                                 <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Comment</th>
                                 <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Date</th>
-                                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">Classic Leather Jacket</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">Sarah Johnson</td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-1">
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <span className="ml-2 text-sm font-semibold text-gray-900">5.0</span>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600 max-w-md truncate">
-                                    Absolutely love this jacket! The quality is outstanding and fits perfectly.
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600">2024-01-15</td>
-                                <td className="px-6 py-4">
-                                    <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                        <Trash2 className="w-4 h-4" />
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">Designer Handbag</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">Emily Rodriguez</td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-1">
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 text-gray-300" />
-                                        <span className="ml-2 text-sm font-semibold text-gray-900">4.0</span>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600 max-w-md truncate">
-                                    Beautiful bag, but a bit pricey. Overall satisfied with the purchase.
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600">2024-01-14</td>
-                                <td className="px-6 py-4">
-                                    <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                        <Trash2 className="w-4 h-4" />
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">Running Sneakers Pro</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">Michael Chen</td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-1">
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 text-gray-300" />
-                                        <Star className="w-4 h-4 text-gray-300" />
-                                        <span className="ml-2 text-sm font-semibold text-gray-900">3.0</span>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600 max-w-md truncate">
-                                    Decent shoes but sizing runs small. Had to return and exchange.
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600">2024-01-13</td>
-                                <td className="px-6 py-4">
-                                    <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                        <Trash2 className="w-4 h-4" />
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">Silk Evening Dress</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">Lisa Martinez</td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-1">
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <span className="ml-2 text-sm font-semibold text-gray-900">5.0</span>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600 max-w-md truncate">
-                                    Stunning dress! Received so many compliments at the event.
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600">2024-01-12</td>
-                                <td className="px-6 py-4">
-                                    <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                        <Trash2 className="w-4 h-4" />
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">Luxury Watch Collection</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">David Kim</td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-1">
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 text-gray-300" />
-                                        <span className="ml-2 text-sm font-semibold text-gray-900">4.0</span>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600 max-w-md truncate">
-                                    Great watch with excellent craftsmanship. Worth the investment.
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600">2024-01-11</td>
-                                <td className="px-6 py-4">
-                                    <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                        <Trash2 className="w-4 h-4" />
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">Denim Jacket Vintage</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">Anna Thompson</td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-1">
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <span className="ml-2 text-sm font-semibold text-gray-900">5.0</span>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600 max-w-md truncate">
-                                    Perfect vintage look! The fit and fabric quality exceeded expectations.
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600">2024-01-10</td>
-                                <td className="px-6 py-4">
-                                    <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                        <Trash2 className="w-4 h-4" />
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">Classic Leather Jacket</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">James Wilson</td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-1">
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 text-gray-300" />
-                                        <Star className="w-4 h-4 text-gray-300" />
-                                        <Star className="w-4 h-4 text-gray-300" />
-                                        <span className="ml-2 text-sm font-semibold text-gray-900">2.0</span>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600 max-w-md truncate">
-                                    Not what I expected. The leather feels different from the description.
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600">2024-01-09</td>
-                                <td className="px-6 py-4">
-                                    <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                        <Trash2 className="w-4 h-4" />
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr className="hover:bg-gray-50 transition-colors">
-                                <td className="px-6 py-4 text-sm font-medium text-gray-900">Designer Handbag</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">Robert Anderson</td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-1">
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                        <span className="ml-2 text-sm font-semibold text-gray-900">5.0</span>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600 max-w-md truncate">
-                                    Bought this as a gift for my wife. She absolutely loves it!
-                                </td>
-                                <td className="px-6 py-4 text-sm text-gray-600">2024-01-08</td>
-                                <td className="px-6 py-4">
-                                    <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                        <Trash2 className="w-4 h-4" />
-                                    </button>
-                                </td>
-                            </tr>
+                            {
+                                allReviews.map((review) => {
+                                    return (
+                                        <tr key={review._id} className="hover:bg-gray-50 transition-colors">
+                                            <td className="px-6 py-4 text-sm font-medium text-gray-900">{review.product.name}</td>
+                                            <td className="px-6 py-4 text-sm text-gray-600">{review.user.name}</td>
+                                            <td className="px-6 py-4">
+                                                <div className="flex items-center gap-1">
+                                                    <span className="ml-2 text-sm font-semibold text-gray-900">{review.rating}</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 text-sm text-gray-600 max-w-md truncate">
+                                                {review.text}.
+                                            </td>
+                                            <td className="px-6 py-4 text-sm text-gray-600">{new Date(review.createdAt).toLocaleDateString('en-IN')}</td>
+                                            
+                                        </tr>
+                                    )
+                                })
+                        }
                         </tbody>
                     </table>
                 </div>

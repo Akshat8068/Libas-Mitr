@@ -1,14 +1,14 @@
 import Coupan from "../models/couponModel.js";
 
 const applyCoupon = async (req, res) => {
-
+const {couponCode}=req.body
     
-    if (!req.body.couponCode) {
+    if (!couponCode) {
         res.status(409)
         throw new Error("Please Entre Coupon");
     }
 
-    let coupon = await Coupan.findOne({ couponCode: req.body.couponCode })
+    let coupon = await Coupan.findOne({ couponCode: couponCode })
 
     if (!coupon) {
         res.status(404)

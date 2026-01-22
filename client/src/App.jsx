@@ -18,11 +18,16 @@ import AdminProductPage from './pages/Admin/AdminProductPage';
 import AdminCoupons from "./pages/Admin/AdminCoupons"
 import AdminOrders from "./pages/Admin/AdminOrders"
 import AdminReviews from "./pages/Admin/AdminReviews"
+import PrivateAdminComponent from './components/PrivateAdminComponent';
+import Profile from './pages/Profile';
+import PageNotFound from './pages/PageNotFound';
+import About from './pages/About';
 const App = () => {
   return (
     <Router>
       <Navbar />
       <Routes>
+        <Route path="*" element={<PageNotFound/>} />
         {/* Home / Hero Page */}
         <Route path="/" element={<Hero />} />
 
@@ -32,23 +37,26 @@ const App = () => {
         {/* User Products Page*/}
         <Route path="/products" element={<UserAllProducts />} />
         <Route path="/products/:pid" element={<SingleProduct />} />
+        <Route path="/about" element={<About />} />
+        <Route path='/profile' element={<Profile/>} />
         {/* Cart Route */}
         <Route path='/cart' element={<ViewCart />} />
         {/* Order */}
         <Route path='/order' element={<PlaceOrder />} />
         {/* Admin */}
-        <Route path='/admin' element={<Dashboard />} />
         {/* <Route path='/admin/dashboard' element={<Dashboard />} /> */}
-
-        <Route path='/admin/users' element={<AdminUsers />} />
-        <Route path='/admin/products' element={<AdminProducts />} />
-        <Route path='/admin/products/:pid' element={<AdminProductPage />} />
-        <Route path='/admin/orders' element={<AdminOrders />} />
-        <Route path='/admin/reviews' element={<AdminReviews />} />
-        <Route path='/admin/coupons' element={<AdminCoupons />} />
-
+        <Route path='/admin' element={<PrivateAdminComponent />}>
+          <Route index element={<Dashboard />} />
+          <Route path='dashboard' element={<Dashboard />}/>
+          <Route path='users' element={<AdminUsers />} />
+          <Route path='products' element={<AdminProducts />} />
+          <Route path='products/:pid' element={<AdminProductPage />} />
+          <Route path='orders' element={<AdminOrders />} />
+          <Route path='reviews' element={<AdminReviews />} />
+          <Route path='coupons' element={<AdminCoupons />} />
+          
+        </Route>
         
-
       </Routes>
 
       <ToastContainer />

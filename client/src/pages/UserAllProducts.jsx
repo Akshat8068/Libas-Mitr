@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import product1 from "../assets/product-01.jpg";
 import BreadCrumb from "../components/BreadCrumb";
 import ProductCard from "../components/ProductCard";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../features/products/productSlice";
+import { toast } from "react-toastify";
+import Loader from "../components/Loader";
 const UserAllProducts = () => {
+
+    const { products, productIsSuccess, productIsLoading, productIsError, productIsErrorMessage } = useSelector(state => state.product)
+    const dispatch = useDispatch()
+    
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [openSection, setOpenSection] = useState(null);
 
@@ -16,13 +24,6 @@ const UserAllProducts = () => {
     const sizes = ["XS", "S", "M", "XL", "2XL", "XXL", "3XL", "4XL"];
     const tags = ["Product", "Bags", "Shoes", "Fashion", "Clothing", "Hats", "Accessories"];
 
-    const products = [
-        { name: "Piqué Biker Jacket", price: "$67.24", img: product1 },
-        { name: "Multi-pocket Chest Bag", price: "$43.48", img: product1 },
-        { name: "Diagonal Textured Cap", price: "$60.90", img: product1 },
-        { name: "Ankle Boots", price: "$98.49", img: product1 },
-    ];
-
     const filterSections = [
         { title: "Categories", items: categories },
         { title: "Branding", items: brands },
@@ -30,7 +31,19 @@ const UserAllProducts = () => {
         { title: "Size", items: sizes },
         { title: "Tags", items: tags },
     ];
+    useEffect(() => {
+        dispatch(getProducts())
 
+        if (productIsError && productIsErrorMessage) {
+            toast.error(productIsErrorMessage,{position:"top-center"})
+        }
+    },[productIsError,productIsErrorMessage])
+
+    if (productIsLoading) {
+        return (
+            <Loader loadingMessage={"Products Loading"}/>
+        )
+    }
     return (
         <section className="bg-gray-50 lg:pt-20 pt-32  relative">
             {/* Breadcrumb */}

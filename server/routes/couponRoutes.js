@@ -4,7 +4,7 @@ import protect from "../middleware/authMiddleware.js"
 
 const router = express.Router()
 
-router.get("/",  couponController.applyCoupon)
+router.post("/",  couponController.applyCoupon)
 
 
 export default router

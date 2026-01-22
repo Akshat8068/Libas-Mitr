@@ -21,10 +21,12 @@ const AdminUsers = () => {
         if (!user) {
             navigate("/")
         }
-        if (!user.isAdmin) {
+        if (!user?.isAdmin) {
             navigate("/admin")
         }
-        dispatch(getAllUsers())
+        if (user.isAdmin) {
+            dispatch(getAllUsers())
+        }
         if (adminIsError && adminErrorMessage) {
             toast.error(adminErrorMessage, { position: 'top-center' })
         }

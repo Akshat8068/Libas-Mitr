@@ -5,16 +5,17 @@ import Review from "../models/reviewModel.js"
 import Product from "../models/productModel.js"
 import Coupan from "../models/couponModel.js"
 import uploaderToCloudinary from "../middleware/cloudinaryMiddleware.js"
+
 const getAllUsers = async (req, res) => {
     let users = await User.find()
     if (!users) {
         res.status(200)
         throw new Error("No users Found");
-
     } else {
         res.status(200).json(users)
     }
 }
+
 const updateUser = async (req, res) => {
     let userId = req.params.uid
     const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true })
@@ -24,28 +25,28 @@ const updateUser = async (req, res) => {
     }
     res.status(201).json(updatedUser)
 }
+
 const getAdminProduct = async (req, res) => {
     let product = await Product.findById(req.params.pid)
     if (!product) {
         res.status(404)
         throw new Error("No Product Found");
-
     } else {
         res.status(200).json(product)
     }
 }
+
 const addProducts = async (req, res) => {
     try {
-
         // Parse JSON strings from multipart form data
-        const {name ,description,brand ,originalPrice ,salePrice }=req.body
+        const { name, description, brand, originalPrice, salePrice } = req.body
         const categories = req.body.categories ? JSON.parse(req.body.categories) : null;
         const colors = req.body.colors ? JSON.parse(req.body.colors) : null;
-        
-        if (!name || !description ||!brand || !categories || !originalPrice || !salePrice || !colors) {
-             res.status(409).json({
+
+        // ✅ FIXED: Added return statement to stop execution after validation error
+        if (!name || !description || !brand || !categories || !originalPrice || !salePrice || !colors) {
+            return res.status(409).json({
                 message: "Please fill all details including colors!",
-                // received: { name, description,brand, categories, originalPrice, salePrice, colors }
             });
         }
 
@@ -59,8 +60,11 @@ const addProducts = async (req, res) => {
             if (req.files?.[`mainImage_${i}`]?.[0]) {
                 const uploadResult = await uploaderToCloudinary(req.files[`mainImage_${i}`][0].path);
                 mainImagePath = uploadResult.secure_url;
+                // ✅ Clean up uploaded file after successful upload
+                if (fs.existsSync(req.files[`mainImage_${i}`][0].path)) {
+                    fs.unlinkSync(req.files[`mainImage_${i}`][0].path);
+                }
             }
-            console.log("MainImage:", mainImagePath);
 
             // Upload catalog/sample images
             const imagesArray = [];
@@ -68,9 +72,12 @@ const addProducts = async (req, res) => {
                 for (let img of req.files[`images_${i}`]) {
                     const uploadResult = await uploaderToCloudinary(img.path);
                     imagesArray.push(uploadResult.secure_url);
+                    // ✅ Clean up uploaded file after successful upload
+                    if (fs.existsSync(img.path)) {
+                        fs.unlinkSync(img.path);
+                    }
                 }
             }
-            console.log("Images:", imagesArray);
 
             processedColors.push({
                 colorName: color.colorName,
@@ -79,7 +86,6 @@ const addProducts = async (req, res) => {
                 sizes: color.sizes, // array of { size, stock }
             });
         }
-        console.log("ProcessedColors:", processedColors);
 
         const product = await Product.create({
             name,
@@ -90,18 +96,22 @@ const addProducts = async (req, res) => {
             salePrice: Number(salePrice),
             colors: processedColors,
         });
-
-        console.log("Created product:", product);
         res.status(201).json(product);
     } catch (error) {
-        console.log("Error:", error);
+        // ✅ Clean up any uploaded files in case of error
+        if (req.files) {
+            Object.values(req.files).flat().forEach(file => {
+                if (fs.existsSync(file.path)) {
+                    fs.unlinkSync(file.path);
+                }
+            });
+        }
         res.status(500).json({ message: "Product not created", error: error.message });
     }
 }
+
 const updateProducts = async (req, res) => {
     try {
-        console.log("Raw req.body:", req.body);
-        console.log("Files:", req.files);
 
         // Find existing product
         const product = await Product.findById(req.params.pid);
@@ -110,17 +120,16 @@ const updateProducts = async (req, res) => {
         }
 
         // Parse JSON strings from multipart form data
-        const { name, description, originalPrice, salePrice,brand } = req.body;
+        const { name, description, originalPrice, salePrice, brand } = req.body;
         const categories = req.body.categories ? JSON.parse(req.body.categories) : null;
         const colors = req.body.colors ? JSON.parse(req.body.colors) : null;
 
-        console.log("Parsed data:", { name, description, categories, originalPrice,brand, salePrice, colors });
 
         // Prepare update object with basic fields
         const updateData = {};
 
         if (name) updateData.name = name;
-        if (brand) updateData.brand=brand
+        if (brand) updateData.brand = brand
         if (description) updateData.description = description;
         if (categories) updateData.categories = categories;
         if (originalPrice) updateData.originalPrice = Number(originalPrice);
@@ -145,7 +154,6 @@ const updateProducts = async (req, res) => {
                     fs.unlinkSync(req.files[`mainImage_${i}`][0].path);
                     mainImagePath = uploadResult.secure_url;
                 }
-                console.log(`MainImage ${i}:`, mainImagePath);
 
                 // Upload new catalog images if provided, otherwise keep existing
                 let imagesArray = existingColor.images || [];
@@ -157,7 +165,6 @@ const updateProducts = async (req, res) => {
                         imagesArray.push(uploadResult.secure_url);
                     }
                 }
-                console.log(`Images ${i}:`, imagesArray);
 
                 processedColors.push({
                     colorName: color.colorName,
@@ -169,10 +176,8 @@ const updateProducts = async (req, res) => {
             }
 
             updateData.colors = processedColors;
-            console.log("ProcessedColors:", processedColors);
         }
 
-        console.log("Update data:", updateData);
 
         // Update product
         const updatedProduct = await Product.findByIdAndUpdate(
@@ -185,11 +190,17 @@ const updateProducts = async (req, res) => {
             return res.status(404).json({ message: "Product not updated" });
         }
 
-        console.log("Updated product:", updatedProduct);
         res.status(200).json(updatedProduct);
 
     } catch (error) {
-        console.log("Error:", error);
+        // ✅ Clean up any uploaded files in case of error
+        if (req.files) {
+            Object.values(req.files).flat().forEach(file => {
+                if (fs.existsSync(file.path)) {
+                    fs.unlinkSync(file.path);
+                }
+            });
+        }
         res.status(500).json({ message: "Product not updated", error: error.message });
     }
 }
@@ -202,12 +213,12 @@ const updateOrder = async (req, res) => {
     if (!myOrder) {
         res.status(404)
         throw new Error("Order Not Found");
-
     }
-   
+
     const updateStock = async (productId, updatedStock) => {
         await Product.findByIdAndUpdate(productId, { stock: updatedStock })
     }
+
     let updatedOrder
     if (status === "dispatched") {
         // update stock
@@ -219,29 +230,23 @@ const updateOrder = async (req, res) => {
 
         updatedOrder = await Order.findByIdAndUpdate(orderId, { status: "dispatched" }, { new: true }).populate("products.product").populate('coupon')
 
-    } else if (status === "delivered"){
-        updatedOrder = await Order.findByIdAndUpdate(orderId, { status: "delivered"  }, { new: true })
+    } else if (status === "delivered") {
+        updatedOrder = await Order.findByIdAndUpdate(orderId, { status: "delivered" }, { new: true })
 
-    }
-    else {
+    } else {
         if (myOrder.status === "dispatched") {
-        res.status(409)
-        throw new Error("Order already Dispatched");
-        
-    }
-        else {
-    updatedOrder = await Order.findByIdAndUpdate(orderId, { status:  "cancelled" }, { new: true })
-
+            res.status(409)
+            throw new Error("Order already Dispatched");
+        } else {
+            updatedOrder = await Order.findByIdAndUpdate(orderId, { status: "cancelled" }, { new: true })
         }
-        
     }
+
     if (!updatedOrder) {
         res.status(409)
         throw new Error("Order Can't Be cancelled");
     }
     res.status(200).json(updatedOrder)
-
-
 }
 
 const getAllOrders = async (req, res) => {
@@ -256,6 +261,7 @@ const getAllOrders = async (req, res) => {
         res.status(200).json(orders)
     }
 }
+
 const getSingleOrder = async (req, res) => {
     const orderId = req.params.oid
 
@@ -269,16 +275,13 @@ const getSingleOrder = async (req, res) => {
     }
 
     res.status(200).json(myOrder)
-
-
 }
 
 const getAllReview = async (req, res) => {
-    let reviews = await Review.find()
+    let reviews = await Review.find().populate('product').populate('user')
     if (!reviews) {
         res.status(200)
         throw new Error("No Reviews Here");
-
     } else {
         res.status(200).json(reviews)
     }
@@ -304,14 +307,23 @@ const allCoupon = async (req, res) => {
     if (!coupons) {
         res.status(200)
         throw new Error("No Reviews Here");
-
     } else {
         res.status(200).json(coupons)
     }
 }
 
-
-const adminController = { getAllUsers, updateUser,getAdminProduct, addProducts, updateProducts, updateOrder, getAllOrders, getSingleOrder, getAllReview, createCoupon, allCoupon }
-
+const adminController = {
+    getAllUsers,
+    updateUser,
+    getAdminProduct,
+    addProducts,
+    updateProducts,
+    updateOrder,
+    getAllOrders,
+    getSingleOrder,
+    getAllReview,
+    createCoupon,
+    allCoupon
+}
 
 export default adminController

@@ -353,10 +353,12 @@ const AdminProduct = () => {
         if (!user) {
             navigate("/login")
         }
-        if (!user.isAdmin) {
+        if (!user?.isAdmin) {
             navigate("/admin")
         }
-        dispatch(getAllProducts())
+        if (user.isAdmin) {
+            dispatch(getAllProducts())
+        }
 
         if (adminIsError && adminErrorMessage) {
             toast.error(adminErrorMessage, { position: 'top-center' })
@@ -517,7 +519,7 @@ const AdminProduct = () => {
                                 </div>
                             <div className="p-6 space-y-6">
                                         <h4 className="text-lg font-semibold text-gray-900">Basic Information</h4>
-                                <form onSubmit={handleSubmit} className="p-6 space-y-6">
+                                <form onSubmit={handleSubmit} className="p-6 space-y-6" encType="multipart/form-data">
                                 {/* Modal Header */}
 
                                 

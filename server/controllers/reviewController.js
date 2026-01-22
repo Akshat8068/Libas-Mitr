@@ -2,7 +2,8 @@ import Order from "../models/orderModel.js";
 import Review from "../models/reviewModel.js"
 
 const getAllReviews = async (req, res) => {
-    let reviews = await Review.find({product:req.params.pid})
+    const productId = req.product
+    let reviews = await Review.find({ product: productId }).populate("user")
     if (!reviews) {
         res.status(200)
         throw new Error("No Products Found");
@@ -33,10 +34,10 @@ const addReview = async (req, res) => {
     }
 
 
-    let orders = await Order.find({ user: userId }).populate("cart")
+    let orders = await Order.find({ user: userId }).populate("products.product")
     
 
-    let orderHistory = orders.map((order) => order.cart.products).flat()
+    let orderHistory = orders.flatMap((order) => order.products || [])
 
     let productExist = orderHistory.filter((product) => {
         return product.product.toString()===productId

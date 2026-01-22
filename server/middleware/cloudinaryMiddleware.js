@@ -17,21 +17,15 @@ const uploaderToCloudinary = async (fileLink) => {
             resource_type: "auto"
         });
 
-        // Delete file from local server AFTER successful upload
-        if (fs.existsSync(fileLink)) {
-            fs.unlinkSync(fileLink);
-            console.log(`✓ Deleted local file: ${fileLink}`);
-        }
+       
 
         return uploadResult;
 
     } catch (error) {
-        console.log('Cloudinary upload error:', error);
 
         // Delete file even if upload fails
         if (fs.existsSync(fileLink)) {
             fs.unlinkSync(fileLink);
-            console.log(`✓ Deleted failed upload file: ${fileLink}`);
         }
 
         throw error; // Re-throw to handle in controller

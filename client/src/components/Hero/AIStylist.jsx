@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import AI1 from "../../assets/one.jpg"
 import AI2 from "../../assets/three.png"
 const AIStylist = () => {
@@ -23,12 +24,12 @@ const AIStylist = () => {
                             ready-to-wear looks suggest karta hai — jaise ek personal stylist ho,
                             jo hamesha sahi idea de.
                         </p>
-                        <a
-                            href="#"
+                        <Link
+                            to={"/products"}
                             className="inline-block border border-gray-800 dark:border-white px-5 py-3 rounded-lg hover:bg-gray-900 hover:text-white transition"
                         >
                             Try AI Stylist
-                        </a>
+                        </Link>
                     </div>
                 </div>
 

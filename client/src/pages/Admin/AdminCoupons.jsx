@@ -38,10 +38,12 @@ const AdminCoupons = () => {
         if (!user) {
             navigate("/")
         }
-        if (!user.isAdmin) {
+        if (!user?.isAdmin) {
             navigate("/admin")
         }
-        dispatch(getAllCoupons())
+        if (user.isAdmin) {
+            dispatch(getAllCoupons())
+        }
 
     }, [user])
     useEffect(() => {

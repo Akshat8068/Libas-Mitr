@@ -34,6 +34,7 @@ const Login = () => {
         if (user) {
             navigate("/")
         }
+        
         if (isError && message) {
             toast.error(message)
         }
